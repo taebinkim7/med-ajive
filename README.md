@@ -21,6 +21,7 @@ Notes:
 ### Stage 2: Do AJIVE Analysis with Image Data and New Gene Expression Data
 
 ### Stage 3: Develop DNN Framework to Predict Cancer Subtype with Image Data and Gene Expression Data
+The DNN framework takes image data and gene expression data as input and predicts the subtype label of the data.
 
 ### Stage 4: Interpretation of DNN Output
 Based on the supervised task in Stage 3, heatmap of input images can be generated to detect ROI in images.
