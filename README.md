@@ -17,7 +17,6 @@ Collect the core image data and gene expression data. Previously only PAM50 gene
 Notes:
 - Number of subjects for image data: 1191
 - Number of genes to use: 100 (PAM50+IMMUNE50)
-- PAM50 list and IMMUNE50 list can be found at this github.
 
 ### Stage 2: Do AJIVE Analysis with Image Data and New Gene Expression Data
 
