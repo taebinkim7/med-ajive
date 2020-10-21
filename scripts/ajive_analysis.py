@@ -27,16 +27,16 @@ genes = data['genes']
 clinical_data = data['clinical_data']
 
 # initial signal ranks determined from PCA scree plots
-init_signal_ranks = {'images': 81, 'genes': 30}
+#init_signal_ranks = {'images': 81, 'genes': 30}
+
+init_signal_ranks = {'images': 81, 'genes': 40}
 
 # run AJIVE
-ajive = AJIVE(
-	init_signal_ranks=init_signal_ranks,
-        n_wedin_samples=1000, n_rand_samples=1000,
-        #zero_index_names=False,
-	n_jobs=-1, store_full=False
-)
-ajive = ajive.fit({'images': subj_img_feats, 'genes': genes},init_signal_ranks)
+ajive = AJIVE(init_signal_ranks=init_signal_ranks,
+              n_wedin_samples=1000, n_randdir_samples=1000,
+              #zero_index_names=False, 
+              n_jobs=-1, store_full=False)
+ajive = ajive.fit({'images': subj_img_feats, 'genes': genes})
 
 dump(ajive, os.path.join(Paths().results_dir, 'data', 'fit_ajive'))
 
@@ -66,7 +66,8 @@ load_dir = os.path.join(Paths().results_dir, 'common', 'loadings')
 os.makedirs(load_dir, exist_ok=True)
 for r in range(ajive.common.rank):
     plt.figure(figsize=load_figsize)
-    ajive.blocks['genes'].plot_common_loading(r)
+    plt.plot(ajive.common.loadings(r))
+    #ajive.blocks['genes'].plot_common_loading(r)
     plt.title('common component {}'.format(r + 1))
     savefig(os.path.join(load_dir, 'loadings_comp_{}.png'.format(r + 1)))
 
@@ -77,7 +78,7 @@ os.makedirs(load_dir, exist_ok=True)
 n_indiv_comps = min(5, ajive.blocks['genes'].individual.rank)
 for r in range(n_indiv_comps):
     plt.figure(figsize=load_figsize)
-    ajive.blocks['genes'].individual.plot_loading(r)
+    plt.plot(ajive.blocks['genes'].individual.loadings(r))
     plt.title('genetic individual component {}'.format(r + 1))
     savefig(os.path.join(load_dir, 'loadings_comp_{}.png'.format(r + 1)))
 
