@@ -13,6 +13,7 @@ from cbcs_joint.viz_utils import mpl_noaxis
 data = load_analysis_data()
 patch_dataset = data['patch_dataset']
 patch_feats = data['patch_feats']
+#patch_feats = patch_feats.drop(['Unnamed: 0'],axis=1)
 core_centroids = data['img_centroids']
 subj_img_feats = data['subj_img_feats']
 image_feats_processor = data['image_feats_processor']
@@ -39,22 +40,18 @@ top_dir = Paths().results_dir
 ####################
 
 for comp in range(ajive.common.rank):
-
-    comp_name = 'comp_{}'.format(comp + 1)
-
+    comp_name = 'comp_{}'.format(comp + 1)    
     subj_scores = ajive.common.scores(norm=True).iloc[:, comp]
-    loading_vec = ajive.blocks['images'].common_loadings().iloc[:, comp]
-
+    #loading_vec = ajive.blocks['images'].joint.loadings().iloc[:, comp]
+    loading_vec = ajive.blocks['images'].joint.loadings().iloc[:, comp]
     # transform patch features and project onto loadings vector
     patch_scores = retain_pandas(patch_feats,
                                  image_feats_processor.transform).\
-        dot(loading_vec)
-
+        dot(loading_vec)    
     # transform core features and project onto loadings vector
     core_scores = retain_pandas(core_centroids,
                                 image_feats_processor.transform).\
         dot(loading_vec)
-
     viz_component(subj_scores=subj_scores,
                   core_scores=core_scores,
                   patch_scores=patch_scores,
