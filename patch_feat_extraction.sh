@@ -7,5 +7,4 @@
 #SBATCH --qos gpu_access
 #SBATCH --gres=gpu:1
 
-module add pytorch
 python scripts/patch_feat_extraction.py
