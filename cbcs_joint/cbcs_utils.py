@@ -29,10 +29,10 @@ def get_avail_images(image_type='processed'):
     assert image_type in ['raw', 'processed']
 
     if image_type == 'raw':
-        image_list = glob('{}/*_image.*'.format(Paths().raw_image_dir))
+        image_list = glob('{}/*.*'.format(Paths().raw_image_dir))
 
     elif image_type == 'processed':
-        image_list = glob('{}/*_image_restained.*'.\
+        image_list = glob('{}/*.*'.\
                           format(Paths().pro_image_dir))
 
     return [os.path.basename(im) for im in image_list]
