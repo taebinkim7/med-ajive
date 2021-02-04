@@ -11,7 +11,7 @@ class Paths(object):
 
         # top level data directory for the analysis
         # The user should modify this attribute before installing the package!
-        self.data_dir = '/datastore/nextgenout5/share/labs/smarronlab/tkim/'
+        self.data_dir = '/datastore/nextgenout5/share/labs/smarronlab/tkim/data/med-ajive/'
 
         # the following files may be requested from the CBCS steering committee
         # should be placed in the data directory
