@@ -7,7 +7,7 @@
 #SBATCH --time=4:00:00
 #SBATCH --partition=gpu
 #SBATCH --output=run-%j.log
-#SBATCH --gres=gpu:1
+#SBATCH --gres=gpu:N
 #SBATCH --qos=gpu_access
 #SBATCH --mail-type=end
 #SBATCH --mail-user=taebinkim@unc.edu
