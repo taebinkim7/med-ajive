@@ -9,8 +9,8 @@ install_requires = ['numpy==1.15.4',
                     'pandas==0.24.0',
                     'scipy==1.2.0',
                     #'sklearn==0.20.2',
-                    #'torch==1.0.0', # pip install -U https://download.pytorch.org/whl/cu100/torch-1.0.0-cp37-cp37m-linux_x86_64.whl
-                    #'torchvision==0.2.1', # pip install
+                    'torch==1.0.0', # pip install -U https://download.pytorch.org/whl/cu100/torch-1.0.0-cp37-cp37m-linux_x86_64.whl
+                    'torchvision==0.2.1', # pip install
                     'statsmodels==0.9.0',
                     #'json==2.0.9',
                     'imageio==2.4.1',
