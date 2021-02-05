@@ -19,7 +19,7 @@ install_requires = ['numpy==1.15.4',
                     'joblib==0.13.1',
                     'tqdm==4.41.0',
                     #'csv==1.0',
-                    #'explore' # clone package
+                    #'explore' # clone 'https://github.com/idc9/explore.git' then python setup.py install
                     #'jive' # pip install
 ]
 
