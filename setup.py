@@ -15,7 +15,7 @@ install_requires = ['numpy==1.15.4',
                     #'json==2.0.9',
                     'imageio==2.4.1',
                     #'PIL==5.4.1',
-                    #'scikit-image==0.14.1'
+                    #'scikit-image==0.14.1' # pip install
                     'joblib==0.13.1',
                     'tqdm==4.41.0',
                     #'csv==1.0',
