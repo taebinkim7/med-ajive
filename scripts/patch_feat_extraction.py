@@ -21,8 +21,8 @@ os.makedirs(Paths().patches_dir, exist_ok=True)
 # patches which have too much background
 
 patch_kws = {'max_prop_background': .9,
-             'patch_size': 200,
-             'pad_image': 'div_200',
+             'patch_size': 100,
+             'pad_image': 'div_100',
              'threshold_algo': 'triangle_otsu'}
 
 patch_dataset = CBCSPatchGrid(**patch_kws)
