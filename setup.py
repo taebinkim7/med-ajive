@@ -8,15 +8,11 @@ install_requires = ['numpy==1.15.4',
                     'matplotlib==3.0.2',
                     'pandas==0.24.0',
                     'scipy==1.2.0',
-                    #'sklearn==0.20.2',
                     'statsmodels==0.9.0',
-                    #'json==2.0.9',
                     'imageio==2.4.1',
-                    #'PIL==5.4.1',
-                    #'scikit-image==0.14.1' # pip install
                     'joblib==0.13.1',
                     'tqdm==4.41.0',
-                    #'csv==1.0',
+                    #'scikit-image==0.14.1' # pip install
                     #'torch==1.0.0', # pip install -U https://download.pytorch.org/whl/cu100/torch-1.0.0-cp37-cp37m-linux_x86_64.whl
                     #'torchvision==0.2.1', # pip install
                     #'explore' # clone 'https://github.com/idc9/explore.git' then python setup.py install
