@@ -1,27 +1,58 @@
-# CBCS Project
+# Medical Image Analysis with AJIVE
 
-This GitHub is used to share code and project progress of CBCS project 
+# Instructions to run the code
 
-## Project Plan
+### 1. Setup data directories
 
-### State 0: Reproduce the Results in JOINT AND INDIVIDUAL ANALYSIS OF BC
+cbcs_joint/Paths.py has instructions for setting up the data directory.
 
-This stage is done. Some notes:
-- Link to the paper: https://arxiv.org/abs/1912.00434
-- Original Code of the paper can be found at: https://github.com/idc9/breast_cancer_image_analysis
-- Code has been cleaned and updated. New code can be found at this github.
+### 2. Install code
 
-### Stage 1: Data Collecting and Cleaning
-Collect the core image data and gene expression data. Previously only PAM50 gene expression data are used. Immune gene expression data will be collected and added to the gene expression data.
+Download the github repository with
+```
+git clone https://github.com/taebinkim7/med-ajive.git
+```
+Change the folder path in cbcs_joint/Paths.py to match the data directories on your computer.
 
-Notes:
-- Number of subjects for image data: 1191
-- Number of genes to use: 100 (PAM50+IMMUNE50)
+Using using python 3.7.2., (e.g. `conda create -n med-ajive python=3.7.2`, `conda activate med-ajive`) install the package with
 
-### Stage 2: Do AJIVE Analysis with Image Data and New Gene Expression Data
+```
+pip install .
+```
 
-### Stage 3: Develop DNN Framework to Predict Cancer Subtype with Image Data and Gene Expression Data
-The DNN framework takes image data and gene expression data as input and predicts the subtype label of the data.
+Install the packages `scikit-image, torch, torchvision, explore, jive` with
+```
+pip install scikit-image==0.14.1
+git clone https://github.com/idc9/explore.git
+python explore/setup.py install
+pip install jive
+pip install https://download.pytorch.org/whl/cu100/torch-1.0.0-cp37-cp37m-linux_x86_64.whl
+pip install torchvision==0.2.1
+```
 
-### Stage 4: Interpretation of DNN Output
-Based on the supervised task in Stage 3, heatmap of input images can be generated to detect ROI in images.
+Note that it is important to install torch 1.0.0 with CUDA 10.0.
+
+
+### 3. Image patch feature extraction
+
+```
+python scripts/patch_feat_extraction.py
+```
+
+This step extracts CNN features from each image patch and may take a few hours. If a GPU is available it will automatically be used.
+
+### 4. AJIVE analysis
+
+```
+python scripts/ajive_analysis.py
+```
+
+The AJIVE analysis runs in about 30 seconds, but the whole script may take a while due to data loading and saving large figures.
+
+### 5. Image visualizations
+
+```
+python scripts/image_visualizations.py
+```
+
+This may take a couple of hours and the resulting saved figures are a couple of gigabytes.
