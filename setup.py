@@ -19,7 +19,8 @@ install_requires = ['numpy==1.15.4',
                     'joblib==0.13.1',
                     'tqdm==4.41.0',
                     #'csv==1.0',
-                    #'jive==0.2.0'
+                    #'explore' # pip install
+                    #'jive' # pip install
 ]
 
 setup(name='cbcs_joint',
