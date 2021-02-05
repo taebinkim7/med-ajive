@@ -9,7 +9,7 @@ install_requires = ['numpy==1.15.4',
                     'pandas==0.24.0',
                     'scipy==1.2.0',
                     #'sklearn==0.20.2',
-                    'torch==1.0.0',
+                    'torch==1.0.0', # install with CUDA 10.0
                     'torchvision==0.2.1',
                     'statsmodels==0.9.0',
                     #'json==2.0.9',
