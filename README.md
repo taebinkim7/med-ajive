@@ -14,7 +14,7 @@ git clone https://github.com/taebinkim7/med-ajive.git
 ```
 Change the folder path in cbcs_joint/Paths.py to match the data directories on your computer.
 
-Using using python 3.7.2., (e.g. `conda create -n med-ajive python=3.7.2`, `conda activate med-ajive`) install the package with
+Using using python 3.7.2., (e.g. `conda create -n med-ajive python=3.7.2`, `conda activate med-ajive`) install the package `cbcs_joint` with
 
 ```
 pip install .
