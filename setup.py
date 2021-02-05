@@ -13,7 +13,7 @@ install_requires = ['numpy==1.15.4',
                     'joblib==0.13.1',
                     'tqdm==4.41.0',
                     #'scikit-image==0.14.1' # pip install
-                    #'torch==1.0.0', # pip install -U https://download.pytorch.org/whl/cu100/torch-1.0.0-cp37-cp37m-linux_x86_64.whl
+                    #'torch==1.0.0', # pip install https://download.pytorch.org/whl/cu100/torch-1.0.0-cp37-cp37m-linux_x86_64.whl / or use wget
                     #'torchvision==0.2.1', # pip install
                     #'explore' # clone 'https://github.com/idc9/explore.git' then python setup.py install
                     #'jive' # pip install
