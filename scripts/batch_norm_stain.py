@@ -1,8 +1,10 @@
 import os
 import argparse
 import numpy as np
+
 from PIL import Image
 
+# from cbcs_joint.Paths import Paths
 
 def normalizeStaining(img, saveFile=None, Io=240, alpha=1, beta=0.15):
     ''' Normalize staining appearence of H&E stained images
@@ -113,8 +115,8 @@ def batch_normal(input_path, output_path, Io, alpha, beta):
                       
 if __name__=='__main__':    
     parser = argparse.ArgumentParser()
-    parser.add_argument('--input_path', type=str, default='/datastore/nextgenout5/share/labs/smarronlab/tkim/data/med-ajive/raw_images', help='RGB image file')
-    parser.add_argument('--output_path', type=str, default='/datastore/nextgenout5/share/labs/smarronlab/tkim/data/med-ajive/processed_images', help='save file')
+    parser.add_argument('--input_path', type=str, default='/datastore/nextgenout5/share/labs/smarronlab/tkim/data/med-ajive_9344/raw_images', help='RGB image file')
+    parser.add_argument('--output_path', type=str, default='/datastore/nextgenout5/share/labs/smarronlab/tkim/data/med-ajive_9344/processed_images', help='save file')
     parser.add_argument('--Io', type=int, default=240)
     parser.add_argument('--alpha', type=float, default=1)
     parser.add_argument('--beta', type=float, default=0.15)
