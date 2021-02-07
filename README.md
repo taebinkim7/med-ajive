@@ -14,20 +14,9 @@ git clone https://github.com/taebinkim7/med-ajive.git
 ```
 Change the folder path in cbcs_joint/Paths.py to match the data directories on your computer.
 
-Using using python 3.7.2., (e.g. `conda create -n med-ajive python=3.7.2`, `conda activate med-ajive`) install the package `cbcs_joint` with
-
+Using using python 3.7.2., (e.g. `conda create -n med-ajive python=3.7.2`, `conda activate med-ajive`) install the package `cbcs_joint` and the other required packages with
 ```
-pip install .
-```
-
-Install the packages `scikit-image, torch, torchvision, explore, jive` with
-```
-pip install scikit-image==0.14.1
-git clone https://github.com/idc9/explore.git
-python explore/setup.py install
-pip install jive
-pip install https://download.pytorch.org/whl/cu100/torch-1.0.0-cp37-cp37m-linux_x86_64.whl
-pip install torchvision==0.2.1
+bash setup.sh
 ```
 
 Note that it is important to install torch 1.0.0 with CUDA 10.0.
