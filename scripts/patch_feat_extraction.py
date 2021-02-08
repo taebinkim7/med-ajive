@@ -13,53 +13,62 @@ from cbcs_joint.cnn_models import load_cnn_model
 
 os.makedirs(Paths().patches_dir, exist_ok=True)
 
+# CNN feature extraction model
+model = load_cnn_model()
 
 #######################
 # get patches dataset #
 #######################
+
 # compute the backgorund mask for each image, break into patches, throw out
 # patches which have too much background
 
-patch_kws = {'max_prop_background': .9,
-             'patch_size': 100,
-             'pad_image': 'div_100',
-             'threshold_algo': 'triangle_otsu'}
+def patch_feat_extraction(image_type):
 
-patch_dataset = CBCSPatchGrid(**patch_kws)
-patch_dataset.make_patch_grid()
-patch_dataset.compute_pixel_stats(image_limit=10)
-patch_dataset.save(os.path.join(Paths().patches_dir,
-                                'patch_dataset'))
+    patch_kws = {'patch_size': 100,
+                 'pad_image': 'div_100',
+                 'max_prop_background': .9,
+                 'threshold_algo': 'triangle_otsu',
+                 'image_type': image_type}
 
-#############################
-# Extract patch CNN features#
-#############################
+    patch_dataset = CBCSPatchGrid(**patch_kws)
+    patch_dataset.make_patch_grid()
+    patch_dataset.compute_pixel_stats(image_limit=10)
+    patch_dataset.save(os.path.join(Paths().patches_dir,
+                                    'patch_dataset_',
+                                    image_type))
 
-# CNN feature extraction model
-model = load_cnn_model()
+    #############################
+    # Extract patch CNN features#
+    #############################
 
-# patch image processing
-# center and scale channels
-channel_avg = patch_dataset.pixel_stats_['avg'] / 255
-channel_std = np.sqrt(patch_dataset.pixel_stats_['var']) / 255
-patch_transformer = Compose([ToTensor(),
-                             Normalize(mean=channel_avg, std=channel_std)])
+    # patch image processing
+    # center and scale channels
+    channel_avg = patch_dataset.pixel_stats_['avg'] / 255
+    channel_std = np.sqrt(patch_dataset.pixel_stats_['var']) / 255
+    patch_transformer = Compose([ToTensor(),
+                                 Normalize(mean=channel_avg, std=channel_std)])
 
-fpath = os.path.join(Paths().patches_dir, 'patch_features.csv')
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    fpath = os.path.join(Paths().patches_dir, 
+                         'patch_features_', 
+                         image_type, 
+                         '.csv')
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-compute_patch_features(patch_dataset=patch_dataset, model=model,
-                       fpath=fpath,
-                       patch_transformer=patch_transformer,
-                       device=device)
+    compute_patch_features(patch_dataset=patch_dataset, model=model,
+                           fpath=fpath,
+                           patch_transformer=patch_transformer,
+                           device=device)
 
 
-###############################
-# save core centroids to disk #
-###############################
+    #######################
+    # save core centroids #
+    #######################
 
-patch_feats = pd.read_csv(os.path.join(Paths().patches_dir,
-                                       'patch_features.csv'),
-                          index_col=['image', 'patch_idx'])
-core_idxs = np.unique(patch_feats.index.get_level_values('image'))
-core_centroids = pd.DataFrame(index=core_idxs, columns=patch_feats.columns)
+    patch_feats = pd.read_csv(fpath, index_col=['image', 'patch_idx'])
+    core_idxs = np.unique(patch_feats.index.get_level_values('image'))
+    core_centroids = pd.DataFrame(data= , index=core_idxs, columns=patch_feats.columns) # mean
+    core_centroids.to_csv(os.path.join(Paths().patches_dir, 
+                                       'core_centroids_', 
+                                       image_type, 
+                                       '.csv'))
