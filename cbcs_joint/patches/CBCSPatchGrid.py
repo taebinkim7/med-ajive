@@ -32,6 +32,9 @@ class CBCSPatchGrid(object):
 
     threshold_algo: str
         Background estimation method, must be one of ['triangle', 'otsu', 'triange_otsu'].
+        
+    image_type: str
+        Image type, must be one of ['he_raw', 'he_processed', 'er'].
 
     limit: None, int
         Maximum number of images to use. Useful for debugging purposes.
@@ -39,11 +42,12 @@ class CBCSPatchGrid(object):
     """
 
     def __init__(self,
-                 patch_size=200,
-                 pad_image='div_200',
+                 patch_size=100,
+                 pad_image='div_100',
                  filter_background=True,
                  max_prop_background=0.9,
                  threshold_algo='triangle_otsu',
+                 image_type='he_processed',
                  limit=None):
 
         self.max_prop_background = max_prop_background
@@ -51,9 +55,10 @@ class CBCSPatchGrid(object):
         self.pad_image = pad_image
         self.filter_background = filter_background
         self.threshold_algo = threshold_algo
-        self.limit = limit
+#         self.image_type = image_type
+#         self.limit = limit
 
-        img_fnames = get_avail_images('processed')
+        img_fnames = get_avail_images(image_type)
         if limit is not None:
             img_fnames = img_fnames[0:limit]
 
@@ -61,7 +66,7 @@ class CBCSPatchGrid(object):
 
         self.image_shapes_ = {}
         self.pixel_stats_ = {'avg': None, 'var': None}
-        self.image_shapes_ = {}
+#         self.image_shapes_ = {}
         self.background_thresholds_ = {}
         self.background_props_ = {}
         self.background_pixel_ = {}
