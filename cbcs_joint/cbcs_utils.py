@@ -16,7 +16,7 @@ def get_cbcsid_group(idx):
     return cbcsid, group
 
 
-def get_avail_images(image_type='processed'):
+def get_avail_images(image_type='he_processed'):
     """
     Returns a list of the file names of all the images available in the
     image directory.
@@ -26,13 +26,17 @@ def get_avail_images(image_type='processed'):
     image_type (str): the type of the image to return. Must be one of
         ['image_restained_masked', 'image_restained', 'image', 'saturations']
     """
-    assert image_type in ['raw', 'processed']
+    assert image_type in ['he_raw', 'he_processed', 'er']
 
-    if image_type == 'raw':
-        image_list = glob('{}/*.*'.format(Paths().raw_image_dir))
+    if image_type == 'he_raw':
+        image_list = glob('{}/*he*'.format(Paths().raw_image_dir))
 
-    elif image_type == 'processed':
-        image_list = glob('{}/*.*'.\
+    elif image_type == 'he_processed':
+        image_list = glob('{}/*he*'.\
+                          format(Paths().pro_image_dir))
+     
+    elif image_type == 'er':
+        image_list = glob('{}/*er*'.\
                           format(Paths().pro_image_dir))
 
     return [os.path.basename(im) for im in image_list]
