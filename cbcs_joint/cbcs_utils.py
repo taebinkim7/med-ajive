@@ -24,7 +24,7 @@ def get_avail_images(image_type='he_processed'):
     Parameters
     ----------
     image_type (str): the type of the image to return. Must be one of
-        ['he_raw', 'he_processed', 'er']
+        ['he_raw', 'he', 'er']
     """
     assert image_type in ['he_raw', 'he_processed', 'er']
 
