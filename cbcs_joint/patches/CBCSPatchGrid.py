@@ -37,7 +37,7 @@ class CBCSPatchGrid(object):
         Maximum number of images to use. Useful for debugging purposes.
                 
     image_type: str
-        Image type, must be one of ['he_raw', 'he_processed', 'er'].
+        Image type, must be one of ['he_raw', 'he', 'er'].
 
     """
 
@@ -48,7 +48,7 @@ class CBCSPatchGrid(object):
                  max_prop_background=0.9,
                  threshold_algo='triangle_otsu',
                  limit=None,
-                 image_type='he_processed'):
+                 image_type='he'):
 
         self.max_prop_background = max_prop_background
         self.patch_size = patch_size
