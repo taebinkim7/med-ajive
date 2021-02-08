@@ -66,9 +66,15 @@ def patch_feat_extraction(image_type):
     #######################
 
     patch_feats = pd.read_csv(fpath, index_col=['image', 'patch_idx'])
+    patch_feats_ = patch_feats.copy()
+    mean_feats = patch_feats_.groupby('image').mean()
     core_idxs = np.unique(patch_feats.index.get_level_values('image'))
-    core_centroids = pd.DataFrame(data= , index=core_idxs, columns=patch_feats.columns) # mean
+    core_centroids = pd.DataFrame(data=mean_feats , index=core_idxs, columns=patch_feats.columns)
     core_centroids.to_csv(os.path.join(Paths().patches_dir, 
                                        'core_centroids_', 
                                        image_type, 
                                        '.csv'))
+
+    
+patch_feat_extraction('he')
+patch_feat_extraction('er')
