@@ -30,7 +30,7 @@ def normalizeStaining(img, saveFile=None, Io=240, alpha=1, beta=0.15):
                       [0.7201, 0.8012],
                       [0.4062, 0.5581]])
         
-    maxCRef = np.array([1.9705, 1.0308])
+    maxCRef = np.array([1., 1.])
     
     # define height and width of image
     h, w, c = img.shape
