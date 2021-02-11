@@ -6,7 +6,7 @@ from PIL import Image
 
 # from cbcs_joint.Paths import Paths
 
-def normalizeStaining(img, saveFile=None, Io=240, alpha=1, beta=0.15):
+def normalizeStaining(img, saveFile=None, Io=256, alpha=1, beta=0.15):
     ''' Normalize staining appearence of H&E stained images
     
     Example use:
@@ -39,7 +39,7 @@ def normalizeStaining(img, saveFile=None, Io=240, alpha=1, beta=0.15):
     img = img.reshape((-1,3))
 
     # calculate optical density
-    OD = -np.log((img.astype(np.float)+1)/Io)
+    OD = -np.log10((img.astype(np.float)+1)/Io)
     
     # remove transparent pixels
     ODhat = OD[~np.any(OD<beta, axis=1)]
@@ -80,7 +80,7 @@ def normalizeStaining(img, saveFile=None, Io=240, alpha=1, beta=0.15):
     C2 = np.divide(C,tmp[:, np.newaxis])
     
     # recreate the image using reference mixing matrix
-    Inorm = np.multiply(Io, np.exp(-HERef.dot(C2)))
+    Inorm = np.multiply(Io, 10**(-HERef.dot(C2)))
     Inorm[Inorm>255] = 254
     Inorm = np.reshape(Inorm.T, (h, w, 3)).astype(np.uint8)  
     
