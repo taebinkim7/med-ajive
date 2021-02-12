@@ -4,9 +4,11 @@ import numpy as np
 
 from PIL import Image
 
+
+
 # from cbcs_joint.Paths import Paths
 
-def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
+def stain_norm(img, stainRef, saveFile=None, Io=240, alpha=1, beta=0.15):
     ''' Normalize staining appearence of H&E stained images
         
     Input:
@@ -29,7 +31,7 @@ def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
                       [0.5605, 0.8766],
                       [0.3113, 0.1242]])
         
-    maxCRef = np.array([1.9705, 1.0308])
+    maxCRef = np.array([2.0567, 1.9197])
     
     # define height and width of image
     h, w, c = img.shape
@@ -99,16 +101,19 @@ def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
 
     return
     
-def batch_normal(input_path, output_path, Io, alpha, beta):
+def get_ref():
+    
+    
+def batch_norm(input_path, output_path, Io, alpha, beta):
     for filename in os.listdir(input_path):
         imageFile = input_path + '/' + filename
         saveFile = output_path + '/' + filename[:-4] + '_restained'
         img = np.array(Image.open(imageFile))
         stain_norm(img = img,
-                      saveFile = saveFile,
-                      Io = Io,
-                      alpha = alpha,
-                      beta = beta)    
+                  saveFile = saveFile,
+                  Io = Io,
+                  alpha = alpha,
+                  beta = beta)    
     return
 
                       
@@ -121,4 +126,4 @@ if __name__=='__main__':
     parser.add_argument('--beta', type=float, default=0.15)
     args = parser.parse_args()
     
-    batch_normal(args.input_path, args.output_path, args.Io, args.alpha, args.beta)
+    batch_norm(args.input_path, args.output_path, args.Io, args.alpha, args.beta)
