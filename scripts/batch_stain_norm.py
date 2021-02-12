@@ -104,7 +104,7 @@ def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
 def get_ref():
     
     
-def batch_norm(input_path, output_path, Io, alpha, beta):
+def batch_stain_norm(input_path, output_path, Io, alpha, beta):
     for filename in os.listdir(input_path):
         imageFile = input_path + '/' + filename
         saveFile = output_path + '/' + filename[:-4] + '_restained'
@@ -126,4 +126,4 @@ if __name__=='__main__':
     parser.add_argument('--beta', type=float, default=0.15)
     args = parser.parse_args()
     
-    batch_norm(args.input_path, args.output_path, args.Io, args.alpha, args.beta)
+    batch_stain_norm(args.input_path, args.output_path, args.Io, args.alpha, args.beta)
