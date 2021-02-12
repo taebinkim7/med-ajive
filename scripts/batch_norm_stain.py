@@ -26,9 +26,13 @@ def normalizeStaining(img, saveFile=None, Io=240, alpha=1, beta=0.15):
         Macenko et al., ISBI 2009
     '''
              
-    HERef = np.array([[0.5626, 0.2159],
-                      [0.7201, 0.8012],
-                      [0.4062, 0.5581]])
+#     HERef = np.array([[0.5626, 0.2159],
+#                       [0.7201, 0.8012],
+#                       [0.4062, 0.5581]])
+
+    HERef = np.array([[0.7674, 0.4648],
+                      [0.5605, 0.8766],
+                      [0.3113, 0.1242]])
         
     maxCRef = np.array([1.9705, 1.0308])
     
