@@ -101,7 +101,7 @@ def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
 
     return
     
-def get_ref():
+# def get_ref():
     
     
 def batch_stain_norm(input_path, output_path, Io, alpha, beta):
