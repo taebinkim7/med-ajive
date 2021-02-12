@@ -6,11 +6,8 @@ from PIL import Image
 
 # from cbcs_joint.Paths import Paths
 
-def normalizeStaining(img, saveFile=None, Io=240, alpha=1, beta=0.15):
+def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
     ''' Normalize staining appearence of H&E stained images
-    
-    Example use:
-        see test.py
         
     Input:
         I: RGB input image
@@ -18,8 +15,6 @@ def normalizeStaining(img, saveFile=None, Io=240, alpha=1, beta=0.15):
         
     Output:
         Inorm: normalized image
-        H: hematoxylin image
-        E: eosin image
     
     Reference: 
         A method for normalizing histology slides for quantitative analysis. M.
@@ -109,7 +104,7 @@ def batch_normal(input_path, output_path, Io, alpha, beta):
         imageFile = input_path + '/' + filename
         saveFile = output_path + '/' + filename[:-4] + '_restained'
         img = np.array(Image.open(imageFile))
-        normalizeStaining(img = img,
+        stain_norm(img = img,
                       saveFile = saveFile,
                       Io = Io,
                       alpha = alpha,
