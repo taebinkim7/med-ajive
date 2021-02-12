@@ -21,17 +21,13 @@ def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
     Reference: 
         A method for normalizing histology slides for quantitative analysis. M.
         Macenko et al., ISBI 2009
-    '''
-             
-#     HERef = np.array([[0.5626, 0.2159],
-#                       [0.7201, 0.8012],
-#                       [0.4062, 0.5581]])
+    '''     
 
-    HERef = np.array([[0.7197, 0.4391],
-                      [0.6078, 0.8889],
-                      [0.3356, 0.1306]])
+    HERef = np.array([[0.7380, 0.2247],
+                      [0.6317, 0.9657],
+                      [0.2373, 0.1299]])
         
-    maxCRef = np.array([1.4613, 1.3647])
+    maxCRef = np.array([1.9699, 1.4776])
     
     # define height and width of image
     h, w, c = img.shape
