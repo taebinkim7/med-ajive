@@ -127,4 +127,4 @@ def batch_stain_norm(input_path, output_path, Io, alpha, beta):
 input_path = '/datastore/nextgenout5/share/labs/smarronlab/tkim/data/med-ajive_9344/raw_images'
 output_path = '/datastore/nextgenout5/share/labs/smarronlab/tkim/data/med-ajive_9344/processed_images'
     
-batch_stain_norm(input_path, output_path)
+batch_stain_norm(input_path, output_path, 250, 1, 0.15)
