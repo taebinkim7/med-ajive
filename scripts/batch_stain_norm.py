@@ -7,7 +7,7 @@ from PIL import Image
 
 # from cbcs_joint.Paths import Paths
 
-def stain_norm(img, saveFile=None, Io=250, alpha=1, beta=0.15):
+def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
     ''' Normalize staining appearence of H&E stained images
         
     Input:
@@ -28,7 +28,7 @@ def stain_norm(img, saveFile=None, Io=250, alpha=1, beta=0.15):
         
 #     maxCRef = np.array([1.0651, 0.4567])
     
-#     HERef = np.array([[0.7787, 0.3303],
+#     stainRef = np.array([[0.7787, 0.3303],
 #                       [0.5895, 0.9376],
 #                       [0.2149, 0.1091]])
         
@@ -127,4 +127,4 @@ def batch_stain_norm(input_path, output_path, Io, alpha, beta):
 input_path = '/datastore/nextgenout5/share/labs/smarronlab/tkim/data/med-ajive_9344/raw_images'
 output_path = '/datastore/nextgenout5/share/labs/smarronlab/tkim/data/med-ajive_9344/processed_images'
     
-batch_stain_norm(input_path, output_path, 250, 1, 0.15)
+batch_stain_norm(input_path, output_path, 240, 1, 0.15)
