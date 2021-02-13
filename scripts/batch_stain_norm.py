@@ -33,7 +33,7 @@ def stain_norm(stainType, img, saveFile=None, alpha=1, beta=0.15):
         maxCRef = np.array([0.5326, 0.4144])  
         Io = 240
 
-    if stainType == 'er':
+    elif stainType == 'er':
         stainRef = np.array([[0.7317, 0.3660],
                              [0.6296, 0.6324],
                              [0.2611, 0.6828]])
@@ -98,9 +98,9 @@ def stain_norm(stainType, img, saveFile=None, alpha=1, beta=0.15):
     
 def batch_stain_norm(stainType, inputPath, outputPath, alpha, beta):
     
-    if stainType = 'he':
+    if stainType == 'he':
         imageList = glob('{}/*_he_*'.format(inputPath))
-    elif stainType = 'er':
+    elif stainType == 'er':
         imageList = glob('{}/*_er_*'.format(inputPath))
     
     for filename in imageList:
