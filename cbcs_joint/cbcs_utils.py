@@ -24,16 +24,19 @@ def get_avail_images(image_type='he_processed'):
     Parameters
     ----------
     image_type (str): the type of the image to return. Must be one of
-        ['he_raw', 'he', 'er']
+        ['he_raw', 'he', 'er_raw', 'er']
     """
-    assert image_type in ['he_raw', 'he_processed', 'er']
+    assert image_type in ['he_raw', 'he_processed', 'er_raw', 'er']
 
     if image_type == 'he_raw':
         image_list = glob('{}/*_he_*'.format(Paths().raw_image_dir))
 
     elif image_type == 'he':
-        image_list = glob('{}/*_he_*_restained*'.format(Paths().pro_image_dir))
-     
+        image_list = glob('{}/*_he_*'.format(Paths().pro_image_dir))
+    
+    elif image_type == 'er_raw':
+        image_list = glob('{}/*_er_*'.format(Paths().raw_image_dir))
+    
     elif image_type == 'er':
         image_list = glob('{}/*_er_*'.format(Paths().pro_image_dir))
 
