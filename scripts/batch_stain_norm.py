@@ -23,11 +23,11 @@ def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
         Macenko et al., ISBI 2009
     '''     
 
-    HERef = np.array([[0.7565, 0.3595],
-                      [0.5942, 0.9553],
-                      [0.2734, 0.1414]])
+    HERef = np.array([[0.7589, 0.2511],
+                      [0.5936, 0.9586],
+                      [0.2679, 0.1340]])
         
-    maxCRef = np.array([1.0935, 0.4644])
+    maxCRef = np.array([1.0651, 0.4567])
       
     # define height and width of image
     h, w, c = img.shape
