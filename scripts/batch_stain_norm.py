@@ -8,7 +8,7 @@ from PIL import Image
 
 # from cbcs_joint.Paths import Paths
 
-def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
+def stain_norm(img, saveFile=None, Io=256, alpha=1, beta=0.15):
     ''' Normalize staining appearence of H&E stained images
         
     Input:
@@ -23,11 +23,11 @@ def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
         Macenko et al., ISBI 2009
     '''     
 
-    HERef = np.array([[0.7383, 0.3002],
-                      [0.6132, 0.9482],
-                      [0.2809, 0.1038]])
+    HERef = np.array([[0.7345, 0.3439],
+                      [0.6075, 0.9302],
+                      [0.3025, 0.1283]])
         
-    maxCRef = np.array([1.5179, 0.8802])
+    maxCRef = np.array([1.5432, 0.9665])
       
     # define height and width of image
     h, w, c = img.shape
