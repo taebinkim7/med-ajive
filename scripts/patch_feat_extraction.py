@@ -38,9 +38,9 @@ def patch_feat_extraction(image_type):
                                     'patch_dataset_',
                                     image_type))
 
-    #############################
-    # Extract patch CNN features#
-    #############################
+    ##############################
+    # Extract patch CNN features #
+    ##############################
 
     # patch image processing
     # center and scale channels
