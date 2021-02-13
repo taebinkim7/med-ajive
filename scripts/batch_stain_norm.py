@@ -25,7 +25,7 @@ def stain_norm(stainType, img, saveFile=None, alpha=1, beta=0.15):
         stainRef = np.array([[0.7787, 0.3303],    #he_r01c04
                              [0.5895, 0.9376],
                              [0.2149, 0.1091]])
-        maxCRef = np.array([0.4361, 0.2255])  
+        maxCRef = np.array([0.38, 0.2255])  
         
 #         stainRef = np.array([[0.7360, 0.2765],   #he_r08c02
 #                              [0.6201, 0.9555],
@@ -67,7 +67,7 @@ def stain_norm(stainType, img, saveFile=None, alpha=1, beta=0.15):
     vMin = eigvecs[:,1:3].dot(np.array([(np.cos(minPhi), np.sin(minPhi))]).T)
     vMax = eigvecs[:,1:3].dot(np.array([(np.cos(maxPhi), np.sin(maxPhi))]).T)
     
-    # a heuristic to make the vector corresponding to the first color and the 
+    # a heuristic to make one vector corresponding to the first color and the 
     # other corresponding to the second
     if vMin[0] > vMax[0]:
         stain = np.array((vMin[:,0], vMax[:,0])).T
