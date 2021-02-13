@@ -37,7 +37,7 @@ class CBCSPatchGrid(object):
         Maximum number of images to use. Useful for debugging purposes.
                 
     image_type: str
-        Image type, must be one of ['he_raw', 'he', 'er'].
+        Image type, must be one of ['he_raw', 'he', 'er_raw', 'er'].
 
     """
 
