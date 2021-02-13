@@ -103,9 +103,10 @@ def batch_stain_norm(stainType, inputPath, outputPath, alpha, beta):
     elif stainType == 'er':
         imageList = glob('{}/*_er_*'.format(inputPath))
     
-    for filename in imageList:
-        imageFile = inputPath + '/' + filename
-        saveFile = outputPath + '/' + filename[:-4] + '_restained'
+    for file in imageList:
+        imageFile = file
+        fileName = os.path.basename(file)
+        saveFile = outputPath + '/' + fileName[:-4] + '_restained'
         img = np.array(Image.open(imageFile))
         stain_norm(stainType = stainType,
                    img = img,
