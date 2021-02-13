@@ -62,8 +62,8 @@ def stain_norm(stainType, img, saveFile=None, alpha=1, beta=0.15):
     vMin = eigvecs[:,1:3].dot(np.array([(np.cos(minPhi), np.sin(minPhi))]).T)
     vMax = eigvecs[:,1:3].dot(np.array([(np.cos(maxPhi), np.sin(maxPhi))]).T)
     
-    # a heuristic to make the vector corresponding to hematoxylin first and the 
-    # one corresponding to eosin second
+    # a heuristic to make the vector corresponding to the first color and the 
+    # other corresponding to the second
     if vMin[0] > vMax[0]:
         stain = np.array((vMin[:,0], vMax[:,0])).T
     else:
