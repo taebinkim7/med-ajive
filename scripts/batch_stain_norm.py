@@ -22,15 +22,15 @@ def stain_norm(stainType, img, saveFile=None, alpha=1, beta=0.15):
     '''     
     
     if stainType == 'he':
-        stainRef = np.array([[0.7787, 0.3303],    #he_r01c04
-                             [0.5895, 0.9376],
-                             [0.2149, 0.1091]])
-        maxCRef = np.array([0.4361, 0.2255])  #0.4361, 0.2255
+#         stainRef = np.array([[0.7787, 0.3303],    #he_r01c04
+#                              [0.5895, 0.9376],
+#                              [0.2149, 0.1091]])
+#         maxCRef = np.array([0.4361, 0.2255])  #0.4361, 0.2255
         
-#         stainRef = np.array([[0.7360, 0.2765],   #he_r08c02
-#                              [0.6201, 0.9555],
-#                              [0.2717, 0.1023]])
-#         maxCRef = np.array([0.5326, 0.4144])  
+        stainRef = np.array([[0.7322, 0.2389],   #reference
+                             [0.6491, 0.9582],
+                             [0.2064, 0.1572]])
+        maxCRef = np.array([0.9662, 0.8490])  
         Io = 240
 
     elif stainType == 'er':
