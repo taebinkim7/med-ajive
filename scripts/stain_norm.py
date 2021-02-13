@@ -107,5 +107,5 @@ def batch_stain_norm(stainType, inputPath, outputPath, alpha, beta):
 inputPath = Paths().raw_image_dir
 outputPath = Paths().pro_image_dir
     
-batch_stain_norm('he', inputPath, outputPath, 0.5, 0.15)
+batch_stain_norm('he', inputPath, outputPath, 1, 0.15)
 # batch_stain_norm('er', inputPath, outputPath, 1, 0.15)
