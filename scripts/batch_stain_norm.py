@@ -1,13 +1,12 @@
 import os
 import numpy as np
 
+from glob import glob
 from PIL import Image
 
+from cbcs_joint.Paths import Paths
 
-
-# from cbcs_joint.Paths import Paths
-
-def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
+def stain_norm(stainType, img, saveFile=None, alpha=1, beta=0.15):
     ''' Normalize staining appearence of H&E stained images
         
     Input:
@@ -21,26 +20,20 @@ def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
         A method for normalizing histology slides for quantitative analysis. M.
         Macenko et al., ISBI 2009
     '''     
-# exp
-#     HERef = np.array([[0.7589, 0.2511],
-#                       [0.5936, 0.9586],
-#                       [0.2679, 0.1340]])
-        
-#     maxCRef = np.array([1.0651, 0.4567])
     
-#     stainRef = np.array([[0.7787, 0.3303],
-#                       [0.5895, 0.9376],
-#                       [0.2149, 0.1091]])
-        
-#     maxCRef = np.array([0.4361, 0.2255])
+    if stainType == 'he':
+        stainRef = np.array([[0.7787, 0.3303],
+                             [0.5895, 0.9376],
+                             [0.2149, 0.1091]])
+        maxCRef = np.array([0.4361, 0.2255])       
+        Io = 240
 
-#     Io = 240
-
-    stainRef = np.array([[0.7317, 0.3660],
-                         [0.6296, 0.6324],
-                         [0.2611, 0.6828]])
-    
-    maxCRef = np.array([0.4013, 0.2593])
+    if stainType == 'er':
+        stainRef = np.array([[0.7317, 0.3660],
+                             [0.6296, 0.6324],
+                             [0.2611, 0.6828]])
+        maxCRef = np.array([0.4013, 0.2593])        
+        Io = 250
       
     # define height and width of image
     h, w, c = img.shape
@@ -56,8 +49,6 @@ def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
         
     # compute eigenvectors
     eigvals, eigvecs = np.linalg.eigh(np.cov(ODhat.T))
-    
-    #eigvecs *= -1
     
     #project on the plane spanned by the eigenvectors corresponding to the two 
     # largest eigenvalues    
@@ -94,37 +85,36 @@ def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
     Inorm[Inorm>255] = 254
     Inorm = np.reshape(Inorm.T, (h, w, 3)).astype(np.uint8)  
     
-    # unmix hematoxylin and eosin
-#    H = np.multiply(Io, np.exp(np.expand_dims(-HERef[:,0], axis=1).dot(np.expand_dims(C2[0,:], axis=0))))
-#    H[H>255] = 254
-#    H = np.reshape(H.T, (h, w, 3)).astype(np.uint8)
-#    
-#    E = np.multiply(Io, np.exp(np.expand_dims(-HERef[:,1], axis=1).dot(np.expand_dims(C2[1,:], axis=0))))
-#    E[E>255] = 254
-#    E = np.reshape(E.T, (h, w, 3)).astype(np.uint8)
-    
     if saveFile is not None:
         Image.fromarray(Inorm).save(saveFile+'.png')
-#        Image.fromarray(H).save(saveFile+'_H.png')
-#        Image.fromarray(E).save(saveFile+'_E.png')
 
     return
 
     
-def batch_stain_norm(input_path, output_path, Io, alpha, beta):
-    for filename in os.listdir(input_path):
-        imageFile = input_path + '/' + filename
-        saveFile = output_path + '/' + filename[:-4] + '_restained'
+def batch_stain_norm(stainType, inputPath, outputPath, alpha, beta):
+    
+    if stainType = 'he':
+        imageList = glob('{}/*_he_*'.format(inputPath))
+    elif stainType = 'er':
+        imageList = glob('{}/*_er_*'.format(inputPath))
+    
+    for filename in imageList:
+        imageFile = inputPath + '/' + filename
+        saveFile = outputPath + '/' + filename[:-4] + '_restained'
         img = np.array(Image.open(imageFile))
-        stain_norm(img = img,
-                  saveFile = saveFile,
-                  Io = Io,
-                  alpha = alpha,
-                  beta = beta)    
+        stain_norm(stainType = stainType,
+                   img = img,
+                   saveFile = saveFile,
+                   alpha = alpha,
+                   beta = beta)    
     return
 
                       
-input_path = '/datastore/nextgenout5/share/labs/smarronlab/tkim/data/med-ajive_9344/raw_images'
-output_path = '/datastore/nextgenout5/share/labs/smarronlab/tkim/data/med-ajive_9344/processed_images'
+# inputPath = '/datastore/nextgenout5/share/labs/smarronlab/tkim/data/med-ajive_9344/raw_images'
+# outputPath = '/datastore/nextgenout5/share/labs/smarronlab/tkim/data/med-ajive_9344/processed_images'
+
+inputPath = Paths().raw_image_dir
+outputPath = Paths().pro_image_dir
     
-batch_stain_norm(input_path, output_path, 240, 1, 0.15)
+batch_stain_norm('he', input_path, output_path, 1, 0.15)
+# batch_stain_norm('er', input_path, output_path, 1, 0.15)
