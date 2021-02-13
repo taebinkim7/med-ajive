@@ -36,11 +36,11 @@ def stain_norm(img, saveFile=None, Io=250, alpha=1, beta=0.15):
 
 #     Io = 240
 
-    stainRef = np.array([[0.5992, 0.3182],
-                         [0.7237, 0.6741],
-                         [0.3424, 0.6666]])
+    stainRef = np.array([[0.7317, 0.3660],
+                         [0.6296, 0.6324],
+                         [0.2611, 0.6828]])
     
-    maxCRef = np.array([0.2367, 0.2386])
+    maxCRef = np.array([0.4013, 0.2593])
       
     # define height and width of image
     h, w, c = img.shape
