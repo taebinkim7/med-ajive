@@ -95,6 +95,7 @@ def batch_stain_norm(stainType, inputPath, outputPath, alpha, beta):
                    saveFile = saveFile,
                    stainRef = stainRef,
                    maxCRef = maxCRef,
+                   Io = Io,
                    alpha = alpha,
                    beta = beta)    
     return
