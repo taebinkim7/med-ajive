@@ -25,7 +25,7 @@ def stain_norm(stainType, img, saveFile=None, alpha=1, beta=0.15):
         stainRef = np.array([[0.7787, 0.3303],    #he_r01c04
                              [0.5895, 0.9376],
                              [0.2149, 0.1091]])
-        maxCRef = np.array([0.38, 0.2255])  
+        maxCRef = np.array([0.38, 0.2255])  #0.4361, 0.2255
         
 #         stainRef = np.array([[0.7360, 0.2765],   #he_r08c02
 #                              [0.6201, 0.9555],
