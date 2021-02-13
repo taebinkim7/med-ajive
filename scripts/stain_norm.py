@@ -22,7 +22,7 @@ def get_stain(img, Io, alpha=1, beta=0.15):
     # compute eigenvectors
     eigvals, eigvecs = np.linalg.eigh(np.cov(ODhat.T))
     
-    #project on the plane spanned by the eigenvectors corresponding to the two 
+    # project on the plane spanned by the eigenvectors corresponding to the two 
     # largest eigenvalues    
     That = ODhat.dot(eigvecs[:,1:3])
     
@@ -53,67 +53,9 @@ def get_stain(img, Io, alpha=1, beta=0.15):
     return stain, C, maxC
     
 def stain_norm(img, saveFile=None, stainRef, maxCRef, Io, alpha=1, beta=0.15):
-#     if stainType == 'he':
-# #         stainRef = np.array([[0.7787, 0.3303],    #he_r01c04
-# #                              [0.5895, 0.9376],
-# #                              [0.2149, 0.1091]])
-# #         maxCRef = np.array([0.4361, 0.2255])  #0.4361, 0.2255
-        
-# #         stainRef = np.array([[0.7543, 0.2710],   #ref1
-# #                              [0.6160, 0.9500],
-# #                              [0.2272, 0.1551]])
-# #         maxCRef = np.array([0.5062, 0.3787])  
-#         Io = 240
-#     elif stainType == 'er':
-# #         stainRef = np.array([[0.7317, 0.3660],
-# #                              [0.6296, 0.6324],
-# #                              [0.2611, 0.6828]])
-# #         maxCRef = np.array([0.4013, 0.2593])        
-#         Io = 250
-   
-#     # define height and width of image
-#     h, w, c = img.shape
-    
-#     # reshape image
-#     img = img.reshape((-1,3))
-
-#     # calculate optical density
-#     OD = -np.log10((img.astype(np.float)+1)/Io)
-    
-#     # remove transparent pixels
-#     ODhat = OD[~np.any(OD<beta, axis=1)]
-        
-#     # compute eigenvectors
-#     eigvals, eigvecs = np.linalg.eigh(np.cov(ODhat.T))
-    
-#     #project on the plane spanned by the eigenvectors corresponding to the two 
-#     # largest eigenvalues    
-#     That = ODhat.dot(eigvecs[:,1:3])
-    
-#     phi = np.arctan2(That[:,1],That[:,0])
-    
-#     minPhi = np.percentile(phi, alpha)
-#     maxPhi = np.percentile(phi, 100-alpha)
-    
-#     vMin = eigvecs[:,1:3].dot(np.array([(np.cos(minPhi), np.sin(minPhi))]).T)
-#     vMax = eigvecs[:,1:3].dot(np.array([(np.cos(maxPhi), np.sin(maxPhi))]).T)
-    
-#     # a heuristic to make one vector corresponding to the first color and the 
-#     # other corresponding to the second
-#     if vMin[0] > vMax[0]:
-#         stain = np.array((vMin[:,0], vMax[:,0])).T
-#     else:
-#         stain = np.array((vMax[:,0], vMin[:,0])).T
-    
-#     # rows correspond to channels (RGB), columns to OD values
-#     Y = np.reshape(OD, (-1, 3)).T
-    
-#     # determine concentrations of the individual stains
-#     C = np.linalg.lstsq(stain,Y, rcond=None)[0]
-    
+    # get stain vectors
     stain, C, maxC = get_stain(img, Io, alpha, beta)
-    
-    
+        
     # normalize stain concentrations
     maxC = np.array([np.percentile(C[0,:], 99), np.percentile(C[1,:],99)])
     tmp = np.divide(maxC,maxCRef)
@@ -131,24 +73,28 @@ def stain_norm(img, saveFile=None, stainRef, maxCRef, Io, alpha=1, beta=0.15):
 
     
 def batch_stain_norm(stainType, inputPath, outputPath, alpha, beta):
-    
+    # get references
     if stainType == 'he':
         imageList = glob('{}/*_he_*'.format(inputPath))
         Io = 240
-        stainRef, _, maxCRef = 
+        fileRef = glob('{}/he_ref*'.format(inputPath))
     elif stainType == 'er':
         imageList = glob('{}/*_er_*'.format(inputPath))
         Io = 250
-        stainRef, _, maxCRef = 
+        fileRef = glob('{}/er_ref*'.format(inputPath))
+        
+    imgRef = np.array(Image.open(fileRef))
+    stainRef, _, maxCRef = get_stain(imgRef, Io, alpha, beta)
     
+    # apply stain normalization to each image
     for file in imageList:
-        imageFile = file
         fileName = os.path.basename(file)
         saveFile = outputPath + '/' + fileName[:-4] + '_restained'
-        img = np.array(Image.open(imageFile))
-        stain_norm(stainType = stainType,
-                   img = img,
+        img = np.array(Image.open(file))
+        stain_norm(img = img,
                    saveFile = saveFile,
+                   stainRef = stainRef,
+                   maxCRef = maxCRef,
                    alpha = alpha,
                    beta = beta)    
     return
