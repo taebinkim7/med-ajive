@@ -1,5 +1,4 @@
 import os
-import argparse
 import numpy as np
 
 from PIL import Image
@@ -8,7 +7,7 @@ from PIL import Image
 
 # from cbcs_joint.Paths import Paths
 
-def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
+def stain_norm(img, saveFile=None, Io=250, alpha=1, beta=0.15):
     ''' Normalize staining appearence of H&E stained images
         
     Input:
@@ -35,11 +34,13 @@ def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
         
 #     maxCRef = np.array([0.4361, 0.2255])
 
-    stainRef = np.array([[0.6047, 0.2993],
-                         [0.7188, 0.6176],
-                         [0.3429, 0.7273]])
+#     Io = 240
+
+    stainRef = np.array([[0.6143, 0.3119],
+                         [0.7090, 0.6178],
+                         [0.3464, 0.7218]])
     
-    maxCRef = np.array([0.3313, 0.4202])
+    maxCRef = np.array([0.3460, 0.4437])
       
     # define height and width of image
     h, w, c = img.shape
@@ -123,13 +124,7 @@ def batch_stain_norm(input_path, output_path, Io, alpha, beta):
     return
 
                       
-if __name__=='__main__':    
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--input_path', type=str, default='/datastore/nextgenout5/share/labs/smarronlab/tkim/data/med-ajive_9344/raw_images', help='RGB image file')
-    parser.add_argument('--output_path', type=str, default='/datastore/nextgenout5/share/labs/smarronlab/tkim/data/med-ajive_9344/processed_images', help='save file')
-    parser.add_argument('--Io', type=int, default=240)
-    parser.add_argument('--alpha', type=float, default=1)
-    parser.add_argument('--beta', type=float, default=0.15)
-    args = parser.parse_args()
+input_path = '/datastore/nextgenout5/share/labs/smarronlab/tkim/data/med-ajive_9344/raw_images'
+output_path = '/datastore/nextgenout5/share/labs/smarronlab/tkim/data/med-ajive_9344/processed_images'
     
-    batch_stain_norm(args.input_path, args.output_path, args.Io, args.alpha, args.beta)
+batch_stain_norm(input_path, output_path)
