@@ -96,9 +96,7 @@ def stain_norm(img, saveFile=None, Io=245, alpha=1, beta=0.15):
 #        Image.fromarray(E).save(saveFile+'_E.png')
 
     return
-    
-# def get_ref():
-    
+
     
 def batch_stain_norm(input_path, output_path, Io, alpha, beta):
     for filename in os.listdir(input_path):
