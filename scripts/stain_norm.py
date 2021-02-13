@@ -6,7 +6,7 @@ from PIL import Image
 
 from cbcs_joint.Paths import Paths
 
-def get_stain(img, Io, alpha=1, beta=0.15):  
+def get_stain(img, Io, alpha, beta):  
     # reshape image
     img = img.reshape((-1,3))
 
@@ -49,7 +49,7 @@ def get_stain(img, Io, alpha=1, beta=0.15):
     
     return stain, C, maxC
     
-def stain_norm(img, stainRef, maxCRef, Io, saveFile=None, alpha=1, beta=0.15):
+def stain_norm(img, stainRef, maxCRef, Io, alpha, beta, saveFile=None):
     # define height and width of image
     h, w, _ = img.shape
     
@@ -95,9 +95,9 @@ def batch_stain_norm(stainType, inputPath, outputPath, alpha, beta):
                    stainRef = stainRef,
                    maxCRef = maxCRef,
                    Io = Io,
-                   saveFile = saveFile,
                    alpha = alpha,
-                   beta = beta)    
+                   beta = beta,
+                   saveFile = saveFile)    
     return
 
                       
@@ -107,5 +107,5 @@ def batch_stain_norm(stainType, inputPath, outputPath, alpha, beta):
 inputPath = Paths().raw_image_dir
 outputPath = Paths().pro_image_dir
     
-batch_stain_norm('he', inputPath, outputPath, 1, 0.15)
+batch_stain_norm('he', inputPath, outputPath, 0.5, 0.15)
 # batch_stain_norm('er', inputPath, outputPath, 1, 0.15)
