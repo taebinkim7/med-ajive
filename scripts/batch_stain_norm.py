@@ -22,18 +22,24 @@ def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
         A method for normalizing histology slides for quantitative analysis. M.
         Macenko et al., ISBI 2009
     '''     
-
+# exp
 #     HERef = np.array([[0.7589, 0.2511],
 #                       [0.5936, 0.9586],
 #                       [0.2679, 0.1340]])
         
 #     maxCRef = np.array([1.0651, 0.4567])
     
-    HERef = np.array([[0.7787, 0.3303],
-                      [0.5895, 0.9376],
-                      [0.2149, 0.1091]])
+#     HERef = np.array([[0.7787, 0.3303],
+#                       [0.5895, 0.9376],
+#                       [0.2149, 0.1091]])
         
-    maxCRef = np.array([0.4361, 0.2255])
+#     maxCRef = np.array([0.4361, 0.2255])
+
+    stainRef = np.array([[0.6047, 0.2993],
+                         [0.7188, 0.6176],
+                         [0.3429, 0.7273]])
+    
+    maxCRef = np.array([0.3313, 0.4202])
       
     # define height and width of image
     h, w, c = img.shape
@@ -67,15 +73,15 @@ def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
     # a heuristic to make the vector corresponding to hematoxylin first and the 
     # one corresponding to eosin second
     if vMin[0] > vMax[0]:
-        HE = np.array((vMin[:,0], vMax[:,0])).T
+        stain = np.array((vMin[:,0], vMax[:,0])).T
     else:
-        HE = np.array((vMax[:,0], vMin[:,0])).T
+        stain = np.array((vMax[:,0], vMin[:,0])).T
     
     # rows correspond to channels (RGB), columns to OD values
     Y = np.reshape(OD, (-1, 3)).T
     
     # determine concentrations of the individual stains
-    C = np.linalg.lstsq(HE,Y, rcond=None)[0]
+    C = np.linalg.lstsq(stain,Y, rcond=None)[0]
     
     # normalize stain concentrations
     maxC = np.array([np.percentile(C[0,:], 99), np.percentile(C[1,:],99)])
@@ -83,7 +89,7 @@ def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
     C2 = np.divide(C,tmp[:, np.newaxis])
     
     # recreate the image using reference mixing matrix
-    Inorm = np.multiply(Io, 10**(-HERef.dot(C2)))
+    Inorm = np.multiply(Io, 10**(-stainRef.dot(C2)))
     Inorm[Inorm>255] = 254
     Inorm = np.reshape(Inorm.T, (h, w, 3)).astype(np.uint8)  
     
