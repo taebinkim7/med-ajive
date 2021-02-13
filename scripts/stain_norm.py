@@ -52,7 +52,7 @@ def get_stain(img, Io, alpha=1, beta=0.15):
     
     return stain, C, maxC
     
-def stain_norm(img, saveFile=None, stainRef, maxCRef, Io, alpha=1, beta=0.15):
+def stain_norm(img, stainRef, maxCRef, Io, saveFile=None, alpha=1, beta=0.15):
     # get stain vectors
     stain, C, maxC = get_stain(img, Io, alpha, beta)
         
@@ -92,10 +92,10 @@ def batch_stain_norm(stainType, inputPath, outputPath, alpha, beta):
         saveFile = outputPath + '/' + fileName[:-4] + '_restained'
         img = np.array(Image.open(file))
         stain_norm(img = img,
-                   saveFile = saveFile,
                    stainRef = stainRef,
                    maxCRef = maxCRef,
                    Io = Io,
+                   saveFile = saveFile,
                    alpha = alpha,
                    beta = beta)    
     return
