@@ -23,11 +23,17 @@ def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
         Macenko et al., ISBI 2009
     '''     
 
-    HERef = np.array([[0.7589, 0.2511],
-                      [0.5936, 0.9586],
-                      [0.2679, 0.1340]])
+#     HERef = np.array([[0.7589, 0.2511],
+#                       [0.5936, 0.9586],
+#                       [0.2679, 0.1340]])
         
-    maxCRef = np.array([1.0651, 0.4567])
+#     maxCRef = np.array([1.0651, 0.4567])
+    
+    HERef = np.array([[0.7787, 0.3303],
+                      [0.5895, 0.9376],
+                      [0.2149, 0.1091]])
+        
+    maxCRef = np.array([0.4361, 0.2255])
       
     # define height and width of image
     h, w, c = img.shape
@@ -36,7 +42,7 @@ def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
     img = img.reshape((-1,3))
 
     # calculate optical density
-    OD = -np.log((img.astype(np.float)+1)/Io)
+    OD = -np.log10((img.astype(np.float)+1)/Io)
     
     # remove transparent pixels
     ODhat = OD[~np.any(OD<beta, axis=1)]
@@ -77,7 +83,7 @@ def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
     C2 = np.divide(C,tmp[:, np.newaxis])
     
     # recreate the image using reference mixing matrix
-    Inorm = np.multiply(Io, np.exp(-HERef.dot(C2)))
+    Inorm = np.multiply(Io, 10**(-HERef.dot(C2)))
     Inorm[Inorm>255] = 254
     Inorm = np.reshape(Inorm.T, (h, w, 3)).astype(np.uint8)  
     
