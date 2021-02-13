@@ -6,10 +6,7 @@ from PIL import Image
 
 from cbcs_joint.Paths import Paths
 
-def get_stain(img, Io, alpha=1, beta=0.15):
-    # define height and width of image
-    h, w, c = img.shape
-    
+def get_stain(img, Io, alpha=1, beta=0.15):  
     # reshape image
     img = img.reshape((-1,3))
 
@@ -53,6 +50,9 @@ def get_stain(img, Io, alpha=1, beta=0.15):
     return stain, C, maxC
     
 def stain_norm(img, stainRef, maxCRef, Io, saveFile=None, alpha=1, beta=0.15):
+    # define height and width of image
+    h, w, _ = img.shape
+    
     # get stain vectors
     stain, C, maxC = get_stain(img, Io, alpha, beta)
         
