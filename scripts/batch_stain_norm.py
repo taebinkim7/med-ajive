@@ -27,10 +27,10 @@ def stain_norm(stainType, img, saveFile=None, alpha=1, beta=0.15):
 #                              [0.2149, 0.1091]])
 #         maxCRef = np.array([0.4361, 0.2255])  #0.4361, 0.2255
         
-        stainRef = np.array([[0.7322, 0.2389],   #reference
-                             [0.6491, 0.9582],
-                             [0.2064, 0.1572]])
-        maxCRef = np.array([0.9662, 0.8490])  
+        stainRef = np.array([[0.7543, 0.2710],   #ref1
+                             [0.6160, 0.9500],
+                             [0.2272, 0.1551]])
+        maxCRef = np.array([0.5062, 0.3787])  
         Io = 240
 
     elif stainType == 'er':
