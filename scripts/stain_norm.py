@@ -77,11 +77,11 @@ def batch_stain_norm(stainType, inputPath, outputPath, alpha, beta):
     if stainType == 'he':
         imageList = glob('{}/*_he_*'.format(inputPath))
         Io = 240
-        fileRef = glob('{}/he_ref*'.format(inputPath))
+        fileRef = glob('{}/he_ref*'.format(inputPath))[0]
     elif stainType == 'er':
         imageList = glob('{}/*_er_*'.format(inputPath))
         Io = 250
-        fileRef = glob('{}/er_ref*'.format(inputPath))
+        fileRef = glob('{}/er_ref*'.format(inputPath))[0]
         
     imgRef = np.array(Image.open(fileRef))
     stainRef, _, maxCRef = get_stain(imgRef, Io, alpha, beta)
