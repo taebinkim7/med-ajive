@@ -8,7 +8,7 @@ from PIL import Image
 
 # from cbcs_joint.Paths import Paths
 
-def stain_norm(img, saveFile=None, Io=245, alpha=1, beta=0.15):
+def stain_norm(img, saveFile=None, Io=240, alpha=1, beta=0.15):
     ''' Normalize staining appearence of H&E stained images
         
     Input:
