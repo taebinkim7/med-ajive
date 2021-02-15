@@ -7,7 +7,7 @@ from jive.AJIVE import AJIVE
 from explore.BlockBlock import BlockBlock
 from explore.Base import Union
 
-from cbcs_joint.load_analysis_data import load_analysis_data
+from cbcs_joint.load_analysis_data import load_he_er_feats
 from cbcs_joint.viz_utils import savefig, mpl_noaxis
 from cbcs_joint.Paths import Paths
 
