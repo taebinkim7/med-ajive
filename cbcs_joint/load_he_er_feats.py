@@ -29,7 +29,8 @@ def load_analysis_data(load_patch_feats=True):
                                 index_col=0)    
     subj_img_feats_he.index = subj_img_feats_he.index.astype(str)
     subj_img_feats_er.index = subj_img_feats_er.index.astype(str)
-    for 
+    subj_img_feats_he.index = [[idx[:-17] for idx in subj_img_feats_he.index]
+    subj_img_feats_he.index = [[idx[:-17] for idx in subj_img_feats_he.index]                           
 
     if load_patch_feats:
         patch_feats_he = \
@@ -75,23 +76,15 @@ def load_analysis_data(load_patch_feats=True):
 
     # make sure subjects are in same order
     idx = subj_img_feats_he.index.sort_values()
-    subj_img_feats = subj_img_feats.loc[idx]
-    genes = genes.loc[idx]
-    clinical_data = clinical_data.loc[idx]
+    subj_img_feats_he = subj_img_feats_he.loc[idx]
+    subj_img_feats_er = subj_img_feats_er.loc[idx]
 
-    return {'patch_dataset': patch_dataset,
-            'img_centroids': img_centroids,
-            'subj_img_feats': subj_img_feats,
-            'patch_feats': patch_feats,
-            'image_feats_processor': image_feats_processor,
-            'genes': genes,
-            'gene_stats': gene_stats,
-            'clinical_data': clinical_data}
+    return {'subj_img_feats_he': subj_img_feats_he,
+            'subj_img_feats_er': subj_img_feats_er,
+            'patch_feats_he': patch_feats_he,
+            'patch_feats_er': patch_feats_er}
 
 
 def sphere(X):
     s = 1.0 / np.array(X).std(axis=1)
     return np.array(X) * s[:, None]
-
-
-# TODO: fix index
