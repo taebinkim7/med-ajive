@@ -25,13 +25,13 @@ model = load_cnn_model()
 
 def patch_feat_extraction(image_type):
 
-    patch_kws = {'patch_size': 100,
-                 'pad_image': 'div_100',
-                 'max_prop_background': .9,
-                 'threshold_algo': 'triangle_otsu',
-                 'image_type': image_type}
+#     patch_kws = {'patch_size': 100,
+#                  'pad_image': 'div_100',
+#                  'max_prop_background': .9,
+#                  'threshold_algo': 'triangle_otsu',
+#                  'image_type': image_type}
 
-    patch_dataset = CBCSPatchGrid(**patch_kws)
+    patch_dataset = CBCSPatchGrid(patch_size=100, pad_image='div_100', max_prop_background=.9, threshold_algo='triangle_otsu', image_type=image_type)
     patch_dataset.make_patch_grid()
     patch_dataset.compute_pixel_stats(image_limit=10)
     patch_dataset.save(os.path.join(Paths().patches_dir,
