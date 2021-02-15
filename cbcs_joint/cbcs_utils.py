@@ -3,6 +3,16 @@ import os
 from cbcs_joint.Paths import Paths
 
 
+def get_cbcsid_group(idx):
+    """
+    Returns the cbcs studyid and group from an image name
+    CBCS3_HE_30030_group_1_image_restained.png -> 30030
+    """
+    stub = idx.split('CBCS3_HE_')[1].split('_image')[0]
+    cbcsid = stub.split('_group')[0]
+    group = stub.split('group_')[1]
+    return cbcsid, group
+
 def get_avail_images(image_type='he'):
     """
     Returns a list of the file names of all the images available in the
