@@ -35,8 +35,7 @@ def patch_feat_extraction(image_type):
     patch_dataset.make_patch_grid()
     patch_dataset.compute_pixel_stats(image_limit=10)
     patch_dataset.save(os.path.join(Paths().patches_dir,
-                                    'patch_dataset_',
-                                    image_type))
+                                    'patch_dataset_' + image_type))
 
     ##############################
     # Extract patch CNN features #
@@ -50,9 +49,7 @@ def patch_feat_extraction(image_type):
                                  Normalize(mean=channel_avg, std=channel_std)])
 
     fpath = os.path.join(Paths().patches_dir, 
-                         'patch_features_', 
-                         image_type, 
-                         '.csv')
+                         'patch_features_' + image_type + '.csv')
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
     compute_patch_features(patch_dataset=patch_dataset, model=model,
@@ -71,9 +68,7 @@ def patch_feat_extraction(image_type):
     core_idxs = np.unique(patch_feats.index.get_level_values('image'))
     core_centroids = pd.DataFrame(data=mean_feats , index=core_idxs, columns=patch_feats.columns)
     core_centroids.to_csv(os.path.join(Paths().patches_dir, 
-                                       'core_centroids_', 
-                                       image_type, 
-                                       '.csv'))
+                                       'core_centroids_' + image_type + '.csv'))
 
     
 patch_feat_extraction('he')
