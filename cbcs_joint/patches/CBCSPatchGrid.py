@@ -55,9 +55,10 @@ class CBCSPatchGrid(object):
         self.pad_image = pad_image
         self.filter_background = filter_background
         self.threshold_algo = threshold_algo
-#         self.limit = limit
+        self.limit = limit
+        self.image_type = image_type
 
-        img_fnames = get_avail_images(image_type)
+        img_fnames = get_avail_images(self.image_type)
         if limit is not None:
             img_fnames = img_fnames[0:limit]
 
