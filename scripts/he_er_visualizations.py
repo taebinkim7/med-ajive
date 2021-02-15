@@ -3,14 +3,13 @@ from joblib import load
 import numpy as np
 
 from cbcs_joint.Paths import Paths
-from cbcs_joint.load_analysis_data import load_analysis_data
-from cbcs_joint.cbcs_utils import get_cbcsid_group
+from cbcs_joint.load_he_er_feats import load_he_er_feats
 from cbcs_joint.make_rpvs_for_component import viz_component
 from cbcs_joint.utils import retain_pandas
 from cbcs_joint.viz_utils import mpl_noaxis
 
 # load pre-computed data e.g. patch features
-data = load_analysis_data()
+data = load_he_er_feats()
 patch_dataset = data['patch_dataset']
 patch_feats = data['patch_feats']
 #patch_feats = patch_feats.drop(['Unnamed: 0'],axis=1)
