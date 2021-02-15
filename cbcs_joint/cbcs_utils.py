@@ -16,7 +16,7 @@ def get_cbcsid_group(idx):
     return cbcsid, group
 
 
-def get_avail_images(image_type='he_processed'):
+def get_avail_images(image_type='he'):
     """
     Returns a list of the file names of all the images available in the
     image directory.
@@ -26,7 +26,7 @@ def get_avail_images(image_type='he_processed'):
     image_type (str): the type of the image to return. Must be one of
         ['he_raw', 'he', 'er_raw', 'er']
     """
-    assert image_type in ['he_raw', 'he_processed', 'er_raw', 'er']
+    assert image_type in ['he_raw', 'he', 'er_raw', 'er']
 
     if image_type == 'he_raw':
         image_list = glob('{}/*_he_*'.format(Paths().raw_image_dir))
