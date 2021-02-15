@@ -254,7 +254,7 @@ class CBCSPatchGrid(object):
 
     def _load_raw_image_and_background(self, image_key):
         """
-        Loads an image an its estimated background mask.
+        Loads an image and its estimated background mask.
 
         Output
         ------
