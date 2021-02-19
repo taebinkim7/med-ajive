@@ -58,7 +58,7 @@ def stain_norm(img, stainType, stainRef, maxCRef, Io, alpha, beta, saveFile=None
     
     # normalize stain concentrations
     if stainType == 'er':
-        stainRef[:, 1] = stain[:, 1] # only normalize the eosin (blue) stain of 'er' images
+        stainRef[:, 0] = stain[:, 0] # only normalize the eosin (blue) stain of 'er' images
 
     maxC = np.array([np.percentile(C[0, :], 99), np.percentile(C[1, :], 99)])
     tmp = np.divide(maxC, maxCRef)
