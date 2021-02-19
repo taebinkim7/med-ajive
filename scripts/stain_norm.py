@@ -49,17 +49,20 @@ def get_stain(img, Io, alpha, beta):
     
     return stain, C, maxC
     
-def stain_norm(img, stainRef, maxCRef, Io, alpha, beta, saveFile=None):
+def stain_norm(img, stainType, stainRef, maxCRef, Io, alpha, beta, saveFile=None):
     # define height and width of image
     h, w, _ = img.shape
     
     # get stain vectors
     stain, C, maxC = get_stain(img, Io, alpha, beta)
-        
+    
     # normalize stain concentrations
+    if stainType == 'er':
+        stainRef[:, 1] = stain[:, 1] # only normalize the eosin (blue) stain of 'er' images
+
     maxC = np.array([np.percentile(C[0, :], 99), np.percentile(C[1, :], 99)])
-    tmp = np.divide(maxC,maxCRef)
-    C2 = np.divide(C,tmp[:, np.newaxis])
+    tmp = np.divide(maxC, maxCRef)
+    C2 = np.divide(C, tmp[:, np.newaxis])
     
     # recreate the image using reference mixing matrix
     Inorm = np.multiply(Io, 10**(-stainRef.dot(C2)))
@@ -72,15 +75,13 @@ def stain_norm(img, stainRef, maxCRef, Io, alpha, beta, saveFile=None):
     return
 
     
-def batch_stain_norm(stainType, inputPath, outputPath, alpha, beta):
-    # get references
+def batch_stain_norm(stainType, inputPath, outputPath, Io, alpha, beta):
+    # get images and references
     if stainType == 'he':
         imageList = glob('{}/*_he*'.format(inputPath))
-        Io = 240
         fileRef = glob('{}/he_ref*'.format(inputPath))[0]
     elif stainType == 'er':
         imageList = glob('{}/*_er*'.format(inputPath))
-        Io = 250
         fileRef = glob('{}/er_ref*'.format(inputPath))[0]
         
     imgRef = np.array(Image.open(fileRef))
@@ -92,6 +93,7 @@ def batch_stain_norm(stainType, inputPath, outputPath, alpha, beta):
         saveFile = outputPath + '/' + fileName[:-4] + '_restained'
         img = np.array(Image.open(file))
         stain_norm(img = img,
+                   stainType = stainType,
                    stainRef = stainRef,
                    maxCRef = maxCRef,
                    Io = Io,
@@ -107,5 +109,5 @@ def batch_stain_norm(stainType, inputPath, outputPath, alpha, beta):
 inputPath = Paths().raw_image_dir
 outputPath = Paths().pro_image_dir
     
-batch_stain_norm('he', inputPath, outputPath, 0.5, 0.15)
-batch_stain_norm('er', inputPath, outputPath, 0.5, 0.15)
+batch_stain_norm('he', inputPath, outputPath, 240, 0.5, 0.15)
+batch_stain_norm('er', inputPath, outputPath, 250, 0.5, 0.15)
