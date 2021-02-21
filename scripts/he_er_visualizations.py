@@ -10,16 +10,18 @@ from cbcs_joint.viz_utils import mpl_noaxis
 
 # load pre-computed data e.g. patch features
 data = load_he_er_feats()
-patch_dataset = data['patch_dataset']
-patch_feats = data['patch_feats']
+patch_dataset_he = data['patch_dataset_he']
+patch_dataset_er = data['patch_dataset_er']
+patch_feats_he = data['patch_feats_he']
+patch_feats_er = data['patch_feats_er']
 #patch_feats = patch_feats.drop(['Unnamed: 0'],axis=1)
-core_centroids = data['img_centroids']
-subj_img_feats = data['subj_img_feats']
+subj_img_feats_he = data['subj_img_feats_he']
+subj_img_feats_er = data['subj_img_feats_er']
 image_feats_processor = data['image_feats_processor']
 
-avail_cbcsids = subj_img_feats.index
-avail_cores = [i for i in core_centroids.index
-               if get_cbcsid_group(i)[0] in avail_cbcsids]
+avail_cores = subj_img_feats_he.index
+# avail_cores = [i for i in core_centroids.index
+#                if get_cbcsid_group(i)[0] in avail_cbcsids]
 
 # load precomputed AJIVE
 ajive = load(os.path.join(Paths().results_dir, 'data', 'fit_ajive'))
