@@ -6,7 +6,6 @@ import numpy as np
 
 from cbcs_joint.Paths import Paths
 from cbcs_joint.utils import retain_pandas, get_mismatches
-from cbcs_joint.cbcs_utils import get_cbcsid_group
 from cbcs_joint.patches.CBCSPatchGrid import CBCSPatchGrid
 from cbcs_joint.patches.utils import get_subj_background, get_subj_background_intensity
 
