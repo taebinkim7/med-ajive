@@ -80,10 +80,10 @@ def load_he_er_feats(load_patch_feats=True):
 
     return {'patch_dataset_he': patch_dataset_he,
             'patch_dataset_er': patch_dataset_er,
-            'subj_img_feats_he': subj_img_feats_he,
-            'subj_img_feats_er': subj_img_feats_er,
             'patch_feats_he': patch_feats_he,
-            'patch_feats_er': patch_feats_er}
+            'patch_feats_er': patch_feats_er,
+            'subj_img_feats_he': subj_img_feats_he,
+            'subj_img_feats_er': subj_img_feats_er}
 
 
 def sphere(X):
