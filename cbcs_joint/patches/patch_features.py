@@ -6,21 +6,28 @@ from tqdm import tqdm
 from torchvision.transforms import ToTensor
 
 
-def compute_patch_features(patch_dataset, model, save='csv', fpath=None,
+def compute_patch_features(image_type,
+                           patch_dataset,
+                           model,
+                           save='csv',
+                           fpath=None,
                            patch_transformer=ToTensor(),
-                           device=None, limit=None):
+                           device=None,
+                           limit=None):
 
     """
     Computes the features for each image patches.
 
     Parameters
     ----------
-
+    
+    imgae_type: str
+        Type of stain
+    
     patch_dataset: cbcs_joint.CBCSPatchGrid.CBCSPatchGrid
 
     model: pytorch module
         The feature extraction model
-
 
     fpath: str
         Where to save the features
@@ -72,14 +79,14 @@ def compute_patch_features(patch_dataset, model, save='csv', fpath=None,
 
             # write column names
             if i == 0 and patch_idx == 0:
-                header = ['feat_{}'.format(j) for j in range(len(feats))]
+                header = [iamge_type + '_feat_{}'.format(j) for j in range(len(feats))]
                 header.insert(0, 'patch_idx')
                 header.insert(0, 'image')
                 writer.writerow(header)
 
             # write features to disk
             feats.insert(0, patch_idx)
-            feats.insert(0, image_key)
+            feats.insert(0, image_key.split('_' + iamge_type)[0])
             # feats.insert(0, '')
             writer.writerow(feats)
 
