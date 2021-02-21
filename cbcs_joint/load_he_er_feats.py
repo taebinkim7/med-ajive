@@ -28,8 +28,8 @@ def load_he_er_feats(load_patch_feats=True):
                                 index_col=0)    
     subj_img_feats_he.index = subj_img_feats_he.index.astype(str)
     subj_img_feats_er.index = subj_img_feats_er.index.astype(str)
-    subj_img_feats_he.index = [[idx.split('_he')[0] for idx in subj_img_feats_he.index]
-    subj_img_feats_er.index = [[idx.split('_er')[0] for idx in subj_img_feats_er.index]                           
+#     subj_img_feats_he.index = [[idx.split('_he')[0] for idx in subj_img_feats_he.index]
+#     subj_img_feats_er.index = [[idx.split('_er')[0] for idx in subj_img_feats_er.index]                           
 
     if load_patch_feats:
         patch_feats_he = \
