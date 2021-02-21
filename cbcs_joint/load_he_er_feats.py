@@ -11,7 +11,7 @@ from cbcs_joint.patches.CBCSPatchGrid import CBCSPatchGrid
 from cbcs_joint.patches.utils import get_subj_background, get_subj_background_intensity
 
 
-def load_analysis_data(load_patch_feats=True):
+def load_he_er_feats(load_patch_feats=True):
     
     ##############
     # image data #
