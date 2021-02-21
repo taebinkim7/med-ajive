@@ -52,7 +52,9 @@ def patch_feat_extraction(image_type):
                          'patch_features_' + image_type + '.csv')
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-    compute_patch_features(patch_dataset=patch_dataset, model=model,
+    compute_patch_features(image_type=image_type,
+                           patch_dataset=patch_dataset,
+                           model=model,
                            fpath=fpath,
                            patch_transformer=patch_transformer,
                            device=device)
