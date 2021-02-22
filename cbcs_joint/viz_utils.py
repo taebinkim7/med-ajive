@@ -14,7 +14,6 @@ def mpl_noaxis(labels=False):
     """
     Do not display any axes for any figure.
     """
-    mpl.use('Agg')
     
     mpl.rcParams['axes.linewidth'] = 0
 
