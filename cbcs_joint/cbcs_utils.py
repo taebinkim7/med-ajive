@@ -26,15 +26,15 @@ def get_avail_images(image_type='he'):
     assert image_type in ['he_raw', 'he', 'er_raw', 'er']
 
     if image_type == 'he_raw':
-        image_list = glob('{}/*_he_*'.format(Paths().raw_image_dir))
+        image_list = glob('{}/*_he*'.format(Paths().raw_image_dir))
 
     elif image_type == 'he':
-        image_list = glob('{}/*_he_*'.format(Paths().pro_image_dir))
+        image_list = glob('{}/*_he*'.format(Paths().pro_image_dir))
     
     elif image_type == 'er_raw':
-        image_list = glob('{}/*_er_*'.format(Paths().raw_image_dir))
+        image_list = glob('{}/*_er*'.format(Paths().raw_image_dir))
     
     elif image_type == 'er':
-        image_list = glob('{}/*_er_*'.format(Paths().pro_image_dir))
+        image_list = glob('{}/*_er*'.format(Paths().pro_image_dir))
 
     return [os.path.basename(im) for im in image_list]
