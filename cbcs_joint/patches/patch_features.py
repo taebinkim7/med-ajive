@@ -79,14 +79,14 @@ def compute_patch_features(image_type,
 
             # write column names
             if i == 0 and patch_idx == 0:
-                header = [iamge_type + '_feat_{}'.format(j) for j in range(len(feats))]
+                header = [image_type + '_feat_{}'.format(j) for j in range(len(feats))]
                 header.insert(0, 'patch_idx')
                 header.insert(0, 'image')
                 writer.writerow(header)
 
             # write features to disk
             feats.insert(0, patch_idx)
-            feats.insert(0, image_key.split('_' + iamge_type)[0])
+            feats.insert(0, image_key.split('_' + image_type)[0])
             # feats.insert(0, '')
             writer.writerow(feats)
 
