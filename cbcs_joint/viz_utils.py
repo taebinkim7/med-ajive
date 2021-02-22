@@ -1,8 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
-mpl.use('Agg')
-
 
 def savefig(fpath, dpi=100):
     """
@@ -16,7 +14,8 @@ def mpl_noaxis(labels=False):
     """
     Do not display any axes for any figure.
     """
-
+    mpl.use('Agg')
+    
     mpl.rcParams['axes.linewidth'] = 0
 
     if not labels:
