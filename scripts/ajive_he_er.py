@@ -28,7 +28,7 @@ subj_img_feats_er = data['subj_img_feats_er']
 # initial signal ranks determined from PCA scree plots
 #init_signal_ranks = {'images': 81, 'genes': 30}
 
-init_signal_ranks = {'he': 81, 'er': 81}
+init_signal_ranks = {'he': 40, 'er': 30}
 
 # run AJIVE
 ajive = AJIVE(init_signal_ranks=init_signal_ranks,
