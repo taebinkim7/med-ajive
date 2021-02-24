@@ -23,9 +23,9 @@ def load_he_er_feats(load_patch_feats=True):
 
     # image patch features
     subj_img_feats_he = pd.read_csv(os.path.join(patch_data_dir, 'core_centroids_he.csv'),
-                                index_col=0)
+                                    index_col=0)
     subj_img_feats_er = pd.read_csv(os.path.join(patch_data_dir, 'core_centroids_er.csv'),
-                                index_col=0)    
+                                    index_col=0)    
     subj_img_feats_he.index = subj_img_feats_he.index.astype(str)
     subj_img_feats_er.index = subj_img_feats_er.index.astype(str)
 #     subj_img_feats_he.index = [[idx.split('_he')[0] for idx in subj_img_feats_he.index]
