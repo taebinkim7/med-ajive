@@ -7,13 +7,12 @@ from PIL import Image
 
 from cbcs_joint.Paths import Paths
 from cbcs_joint.viz_utils import savefig
-from cbcs_joint.cbcs_utils import get_cbcsid_group
 from cbcs_joint.patches.utils import plot_coord_ticks, get_patch_map
 from cbcs_joint.jitter import jitter_hist
 
 
-def viz_component(subj_scores, core_scores,
-                  patch_scores, patch_dataset, avail_cores,
+def viz_component(subj_scores, patch_scores, 
+                  patch_dataset, avail_cores,
                   loading_vec, comp_name,
                   top_dir, signal_kind=None,
                   n_extreme_subjs=5, n_extreme_patches=20,
@@ -34,10 +33,10 @@ def viz_component(subj_scores, core_scores,
     savefig(os.path.join(scores_dir,
                          '{}_subject_scores.png'.format(comp_name)))
 
-    jitter_hist(core_scores, hist_kws={'bins': 100})
-    plt.xlabel('core scores')
-    savefig(os.path.join(scores_dir,
-                         '{}_core_scores.png'.format(comp_name)))
+#     jitter_hist(core_scores, hist_kws={'bins': 100})
+#     plt.xlabel('core scores')
+#     savefig(os.path.join(scores_dir,
+#                          '{}_core_scores.png'.format(comp_name)))
 
     jitter_hist(patch_scores, hist_kws={'bins': 100})
     plt.xlabel('patch scores')
@@ -50,24 +49,16 @@ def viz_component(subj_scores, core_scores,
 
     # most extreme subjects by scores
     extreme_subjs = get_most_extreme(subj_scores, n_extreme_subjs)
-
-    # extreme cores
     displayed_subj_scores = []
+    
     for extr in extreme_subjs.keys():
-        for subj_idx, cbcsid in enumerate(extreme_subjs[extr]):
-            displayed_subj_scores.append(subj_scores[cbcsid])
-
-            # cores for this subject
-            subj_cores = [c for c in avail_cores if cbcsid in c]
-
-            # move each core image to the directory
-            for core_name in subj_cores:
-                move_dir = get_and_make_dir(top_dir, signal_kind, 'cores', comp_name, extr)
-                old_fpath = os.path.join(Paths().pro_image_dir, core_name)
-                new_name = '{}_{}'.format(subj_idx, core_name)
-                new_fpath = os.path.join(move_dir, new_name)
-
-                copyfile(old_fpath, new_fpath)
+        for subj_idx, subj_id in enumerate(extreme_subjs[extr]):
+            displayed_subj_scores.append(subj_scores[subj_id])         
+            move_dir = get_and_make_dir(top_dir, signal_kind, 'cores', comp_name, extr)
+            old_fpath = os.path.join(Paths().pro_image_dir, subj_id)
+            new_name = '{}_{}'.format(subj_idx, subj_id)
+            new_fpath = os.path.join(move_dir, new_name)
+            copyfile(old_fpath, new_fpath)
 
     # plot subject level scores histogram
     jitter_hist(subj_scores.values, hist_kws={'bins': 100})
@@ -77,6 +68,10 @@ def viz_component(subj_scores, core_scores,
     save_dir = get_and_make_dir(top_dir, signal_kind, 'cores', comp_name)
     savefig(os.path.join(save_dir, 'scores.png'))
 
+    
+    ########################################################## TODO #############################################################
+    
+    
     ######################
     # patch for subjects #
     ######################
@@ -86,7 +81,7 @@ def viz_component(subj_scores, core_scores,
         folder_list = [signal_kind, 'core_patches', comp_name, extr]
         save_dir = get_and_make_dir(top_dir, *folder_list)
 
-        for subj_rank, cbcsid in enumerate(extreme_subjs[extr]):
+        for subj_rank, subj_id in enumerate(extreme_subjs[extr]):
 
             # cores for this subject
             subj_cores = [c for c in avail_cores if cbcsid in c]
