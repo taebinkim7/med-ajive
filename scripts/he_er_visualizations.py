@@ -33,7 +33,7 @@ top_dir = Paths().results_dir
 # joint components #
 ####################
 
-def viz_joint_component(image_type):
+def viz_joint_comps(image_type):
     
     patch_dataset = data['patch_dataset_' + image_type]
     patch_feats = data['patch_feats_' + image_type]
@@ -70,7 +70,7 @@ def viz_joint_component(image_type):
 
 n_indiv_comps = 5
 
-def viz_indiv_component(image_type):
+def viz_indiv_comps(image_type):
     
     patch_dataset = data['patch_dataset_' + image_type]
     patch_feats = data['patch_feats_' + image_type]
