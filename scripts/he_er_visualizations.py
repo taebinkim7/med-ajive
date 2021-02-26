@@ -10,18 +10,12 @@ from cbcs_joint.viz_utils import mpl_noaxis
 
 # load pre-computed data e.g. patch features
 data = load_he_er_feats()
-patch_dataset_he = data['patch_dataset_he']
-patch_dataset_er = data['patch_dataset_er']
-patch_feats_he = data['patch_feats_he']
-patch_feats_er = data['patch_feats_er']
+
 #patch_feats = patch_feats.drop(['Unnamed: 0'],axis=1)
 subj_img_feats_he = data['subj_img_feats_he']
-subj_img_feats_er = data['subj_img_feats_er']
 image_feats_processor = data['image_feats_processor']
 
 avail_cores = subj_img_feats_he.index
-# avail_cores = [i for i in core_centroids.index
-#                if get_cbcsid_group(i)[0] in avail_cbcsids]
 
 # load precomputed AJIVE
 ajive = load(os.path.join(Paths().results_dir, 'data', 'fit_ajive'))
@@ -40,31 +34,35 @@ top_dir = Paths().results_dir
 # joint components #
 ####################
 
-for comp in range(ajive.common.rank):
-    comp_name = 'comp_{}'.format(comp + 1)    
-    subj_scores = ajive.common.scores(norm=True).iloc[:, comp]
-    #loading_vec = ajive.blocks['images'].joint.loadings().iloc[:, comp]
-    loading_vec = ajive.blocks['images'].joint.loadings().iloc[:, comp]
-    # transform patch features and project onto loadings vector
-    patch_scores = retain_pandas(patch_feats,
-                                 image_feats_processor.transform).\
-        dot(loading_vec)    
-    # transform core features and project onto loadings vector
-    core_scores = retain_pandas(core_centroids,
-                                image_feats_processor.transform).\
-        dot(loading_vec)
-    viz_component(subj_scores=subj_scores,
-                  core_scores=core_scores,
-                  patch_scores=patch_scores,
-                  patch_dataset=patch_dataset,
-                  loading_vec=loading_vec,
-                  comp_name=comp_name,
-                  top_dir=top_dir,
-                  signal_kind='common',
-                  avail_cores=avail_cores,
-                  n_extreme_subjs=n_extreme_subjs,
-                  n_extreme_patches=n_extreme_patches,
-                  n_patches_per_subj=n_patches_per_subj)
+def viz_joint_component(image_type):
+    
+    patch_dataset = data['patch_dataset_' + image_type]
+    patch_feats = data['patch_feats_' + image_type]
+    
+    for comp in range(ajive.common.rank):
+        comp_name = image_type + '_joint_comp_{}'.format(comp + 1)    
+        subj_scores = ajive.common.scores(norm=True).iloc[:, comp]
+        loading_vec = ajive.blocks[image_type].joint.loadings().iloc[:, comp]
+        
+        # transform patch features and project onto loadings vector
+        patch_scores = retain_pandas(patch_feats,
+                                     image_feats_processor.transform).dot(loading_vec)   
+        
+#         transform core features and project onto loadings vector
+#         core_scores = retain_pandas(core_centroids,
+#                                     image_feats_processor.transform).dot(loading_vec)
+        viz_component(subj_scores=subj_scores,
+#                       core_scores=core_scores,
+                      patch_dataset=patch_dataset,
+                      patch_scores=patch_scores,
+                      loading_vec=loading_vec,
+                      comp_name=comp_name,
+                      top_dir=top_dir,
+                      signal_kind='common',
+                      avail_cores=avail_cores,
+                      n_extreme_subjs=n_extreme_subjs,
+                      n_extreme_patches=n_extreme_patches,
+                      n_patches_per_subj=n_patches_per_subj)
 
 
 ####################
@@ -73,34 +71,37 @@ for comp in range(ajive.common.rank):
 
 n_indiv_comps = 5
 
-for comp in range(n_indiv_comps):
-    comp_name = 'comp_{}'.format(comp + 1)
-    print(comp_name)
+def viz_indiv_component(image_type):
+    
+    patch_dataset = data['patch_dataset_' + image_type]
+    patch_feats = data['patch_feats_' + image_type]
+    
+    for comp in range(n_indiv_comps):
+        comp_name = image_type + '_indiv_comp_{}'.format(comp + 1)
+        print(comp_name)
 
-    subj_scores = ajive.blocks['images'].\
-        individual.scores(norm=True).iloc[:, comp]
-    loading_vec = ajive.blocks['images'].\
-        individual.loadings().iloc[:, comp]
+        subj_scores = ajive.blocks[image_type].\
+            individual.scores(norm=True).iloc[:, comp]
+        loading_vec = ajive.blocks[image_type].\
+            individual.loadings().iloc[:, comp]
 
-    # transform patch features and project onto loadings vector
-    patch_scores = \
-        retain_pandas(patch_feats, image_feats_processor.transform).\
-        dot(loading_vec)
+        # transform patch features and project onto loadings vector
+        patch_scores = \
+            retain_pandas(patch_feats, image_feats_processor.transform).dot(loading_vec)
 
-    # transform core features and project onto loadings vector
-    core_scores = retain_pandas(core_centroids,
-                                image_feats_processor.transform).\
-        dot(loading_vec)
+        # transform core features and project onto loadings vector
+        core_scores = retain_pandas(core_centroids,
+                                    image_feats_processor.transform).dot(loading_vec)
 
-    viz_component(subj_scores=subj_scores,
-                  core_scores=core_scores,
-                  patch_scores=patch_scores,
-                  patch_dataset=patch_dataset,
-                  loading_vec=loading_vec,
-                  comp_name=comp_name,
-                  top_dir=top_dir,
-                  signal_kind='image_indiv',
-                  avail_cores=avail_cores,
-                  n_extreme_subjs=n_extreme_subjs,
-                  n_extreme_patches=n_extreme_patches,
-                  n_patches_per_subj=n_patches_per_subj)
+        viz_component(subj_scores=subj_scores,
+                      core_scores=core_scores,
+                      patch_scores=patch_scores,
+                      patch_dataset=patch_dataset,
+                      loading_vec=loading_vec,
+                      comp_name=comp_name,
+                      top_dir=top_dir,
+                      signal_kind=image_type + '_indiv',
+                      avail_cores=avail_cores,
+                      n_extreme_subjs=n_extreme_subjs,
+                      n_extreme_patches=n_extreme_patches,
+                      n_patches_per_subj=n_patches_per_subj)
