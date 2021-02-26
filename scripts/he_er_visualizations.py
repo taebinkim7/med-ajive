@@ -14,7 +14,6 @@ data = load_he_er_feats()
 #patch_feats = patch_feats.drop(['Unnamed: 0'],axis=1)
 subj_img_feats_he = data['subj_img_feats_he']
 image_feats_processor = data['image_feats_processor']
-
 avail_cores = subj_img_feats_he.index
 
 # load precomputed AJIVE
