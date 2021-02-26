@@ -104,3 +104,10 @@ def viz_indiv_comps(image_type):
                       n_extreme_subjs=n_extreme_subjs,
                       n_extreme_patches=n_extreme_patches,
                       n_patches_per_subj=n_patches_per_subj)
+
+        
+viz_joint_comps('he')
+viz_joint_comps('er')
+
+viz_indiv_comps('he')
+viz_indiv_comps('er')
