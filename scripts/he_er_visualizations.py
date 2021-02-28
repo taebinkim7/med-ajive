@@ -14,7 +14,7 @@ data = load_he_er_feats()
 #patch_feats = patch_feats.drop(['Unnamed: 0'],axis=1)
 subj_img_feats_he = data['subj_img_feats_he']
 image_feats_processor = data['image_feats_processor']
-avail_cores = subj_img_feats_he.index
+subj_cores = subj_img_feats_he.index
 
 # load precomputed AJIVE
 ajive = load(os.path.join(Paths().results_dir, 'data', 'fit_ajive'))
@@ -57,7 +57,7 @@ def viz_joint_comps(image_type):
                       comp_name=comp_name,
                       top_dir=top_dir,
                       signal_kind='common',
-                      avail_cores=avail_cores,
+                      subj_cores=subj_cores,
                       n_extreme_subjs=n_extreme_subjs,
                       n_extreme_patches=n_extreme_patches,
                       n_patches_per_subj=n_patches_per_subj)
@@ -98,7 +98,7 @@ def viz_indiv_comps(image_type):
                       comp_name=comp_name,
                       top_dir=top_dir,
                       signal_kind=image_type + '_indiv',
-                      avail_cores=avail_cores,
+                      subj_cores=subj_cores,
                       n_extreme_subjs=n_extreme_subjs,
                       n_extreme_patches=n_extreme_patches,
                       n_patches_per_subj=n_patches_per_subj)
