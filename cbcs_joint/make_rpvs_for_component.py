@@ -116,7 +116,7 @@ def viz_component(image_type, subj_scores,
         for patch_rank, patch_name in enumerate(extreme_patches[extr]):
             image_key, patch_idx = patch_name
             displayed_patch_scores.append(patch_scores[patch_name])
-            image = patch_dataset.load_patches(image_key + '_' + image_type, patch_idx)
+            image = patch_dataset.load_patches(image_key, patch_idx)
             name = '{}_{}_patch_idx{}'.format(image_type, patch_rank, *patch_name)
 
             # save image
