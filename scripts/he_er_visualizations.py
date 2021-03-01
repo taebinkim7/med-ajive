@@ -77,6 +77,7 @@ def viz_indiv_comps(image_type):
     
     patch_dataset = data['patch_dataset_' + image_type]
     patch_feats = data['patch_feats_' + image_type]
+#     core_centroids =
     
     for comp in range(n_indiv_comps):
         comp_name = image_type + '_indiv_comp_{}'.format(comp + 1)
