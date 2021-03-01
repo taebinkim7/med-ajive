@@ -73,5 +73,5 @@ def patch_feat_extraction(image_type):
                                        'core_centroids_' + image_type + '.csv'))
 
     
-patch_feat_extraction('he')
+# patch_feat_extraction('he')
 patch_feat_extraction('er')
