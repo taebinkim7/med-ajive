@@ -50,7 +50,8 @@ def viz_joint_comps(image_type):
 #         transform core features and project onto loadings vector
 #         core_scores = retain_pandas(core_centroids,
 #                                     image_feats_processor.transform).dot(loading_vec)
-        viz_component(subj_scores=subj_scores,
+        viz_component(image_type=image_type,
+                      subj_scores=subj_scores,
                       patch_scores=patch_scores,
                       patch_dataset=patch_dataset,
                       loading_vec=loading_vec,
@@ -91,7 +92,8 @@ def viz_indiv_comps(image_type):
         core_scores = retain_pandas(core_centroids,
                                     image_feats_processor.transform).dot(loading_vec)
 
-        viz_component(subj_scores=subj_scores,
+        viz_component(image_type=image_type,
+                      subj_scores=subj_scores,
                       patch_scores=patch_scores,
                       patch_dataset=patch_dataset,
                       loading_vec=loading_vec,
