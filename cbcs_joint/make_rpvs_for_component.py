@@ -47,26 +47,26 @@ def viz_component(image_type, subj_scores,
     # subject level #
     #################
 
-#     # most extreme subjects by scores
-#     extreme_subjs = get_most_extreme(subj_scores, n_extreme_subjs)
-#     displayed_subj_scores = []
+    # most extreme subjects by scores
+    extreme_subjs = get_most_extreme(subj_scores, n_extreme_subjs)
+    displayed_subj_scores = []
     
-#     for extr in extreme_subjs.keys():
-#         for subj_rank, subj_id in enumerate(extreme_subjs[extr]):
-#             displayed_subj_scores.append(subj_scores[subj_id])         
-#             move_dir = get_and_make_dir(top_dir, signal_kind, 'cores', comp_name, extr)
-#             old_fpath = os.path.join(Paths().pro_image_dir, subj_id)
-#             new_name = '{}_{}'.format(subj_rank, subj_id)
-#             new_fpath = os.path.join(move_dir, new_name)
-#             copyfile(old_fpath, new_fpath)
+    for extr in extreme_subjs.keys():
+        for subj_rank, subj_id in enumerate(extreme_subjs[extr]):
+            displayed_subj_scores.append(subj_scores[subj_id])         
+            move_dir = get_and_make_dir(top_dir, signal_kind, 'cores', comp_name, extr)
+            old_fpath = os.path.join(Paths().pro_image_dir, subj_id)
+            new_name = '{}_{}'.format(subj_rank, subj_id)
+            new_fpath = os.path.join(move_dir, new_name)
+            copyfile(old_fpath, new_fpath)
 
-#     # plot subject level scores histogram
-#     jitter_hist(subj_scores.values, hist_kws={'bins': 100})
-#     plt.xlabel('{}, {} subject scores'.format(signal_kind, comp_name))
-#     for s in displayed_subj_scores:
-#         plt.axvline(s, color='red')
-#     save_dir = get_and_make_dir(top_dir, signal_kind, 'cores', comp_name)
-#     savefig(os.path.join(save_dir, 'scores.png'))
+    # plot subject level scores histogram
+    jitter_hist(subj_scores.values, hist_kws={'bins': 100})
+    plt.xlabel('{}, {} subject scores'.format(signal_kind, comp_name))
+    for s in displayed_subj_scores:
+        plt.axvline(s, color='red')
+    save_dir = get_and_make_dir(top_dir, signal_kind, 'cores', comp_name)
+    savefig(os.path.join(save_dir, 'scores.png'))
 
     
     ########################################################## TODO #############################################################
@@ -78,7 +78,7 @@ def viz_component(image_type, subj_scores,
     # sorts patches by scores (ignoring subjects/core grouping)
 
 #     for extr in extreme_subjs.keys():
-#         folder_list = [signal_kind, 'core_patches', comp_name, extr]
+#         folder_list = [signal_kind, 'core_patches_' + image_type, comp_name, extr]
 #         save_dir = get_and_make_dir(top_dir, *folder_list)
 
 #         for subj_rank, subj_id in enumerate(extreme_subjs[extr]):
