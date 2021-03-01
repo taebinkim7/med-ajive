@@ -1,6 +1,8 @@
 import os
 from joblib import load
 import numpy as np
+import matplotlib as mpl
+mpl.use('Agg')
 
 from cbcs_joint.Paths import Paths
 from cbcs_joint.load_he_er_feats import load_he_er_feats
