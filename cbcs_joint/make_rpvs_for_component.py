@@ -12,7 +12,7 @@ from cbcs_joint.jitter import jitter_hist
 
 
 def viz_component(subj_scores, patch_scores, 
-                  patch_dataset, avail_cores,
+                  patch_dataset, subj_cores,
                   loading_vec, comp_name,
                   top_dir, signal_kind=None,
                   n_extreme_subjs=5, n_extreme_patches=20,
@@ -52,11 +52,11 @@ def viz_component(subj_scores, patch_scores,
     displayed_subj_scores = []
     
     for extr in extreme_subjs.keys():
-        for subj_idx, subj_id in enumerate(extreme_subjs[extr]):
+        for subj_rank, subj_id in enumerate(extreme_subjs[extr]):
             displayed_subj_scores.append(subj_scores[subj_id])         
             move_dir = get_and_make_dir(top_dir, signal_kind, 'cores', comp_name, extr)
             old_fpath = os.path.join(Paths().pro_image_dir, subj_id)
-            new_name = '{}_{}'.format(subj_idx, subj_id)
+            new_name = '{}_{}'.format(subj_rank, subj_id)
             new_fpath = os.path.join(move_dir, new_name)
             copyfile(old_fpath, new_fpath)
 
@@ -83,16 +83,13 @@ def viz_component(subj_scores, patch_scores,
 
         for subj_rank, subj_id in enumerate(extreme_subjs[extr]):
 
-            # cores for this subject
-            subj_cores = [c for c in avail_cores if cbcsid in c]
-
             # get top patches for this subject
             subj_patch_scores = patch_scores[[i for i in patch_scores.index
-                                              if cbcsid in i[0]]]
+                                              if subj_id in i[0]]]
             top_patch_idxs = list(get_most_extreme(subj_patch_scores,
                                                    n=n_patches_per_subj)[extr])
 
-            plot_image_top_patches(cbcsid=cbcsid,
+            plot_image_top_patches(subj_id=subj_id,
                                    subj_cores=subj_cores,
                                    top_patches=top_patch_idxs,
                                    patch_dataset=patch_dataset,
@@ -100,8 +97,7 @@ def viz_component(subj_scores, patch_scores,
                                    n_patches_per_subj=n_patches_per_subj,
                                    inches=5)
 
-            savefig(os.path.join(save_dir, '{}_{}.png'.format(subj_rank,
-                                                              cbcsid)))
+            savefig(os.path.join(save_dir, '{}_{}.png'.format(subj_rank, subj_id)))
 
     ###############
     # patch level #
@@ -135,13 +131,13 @@ def viz_component(subj_scores, patch_scores,
     savefig(os.path.join(save_dir, 'scores.png'))
 
 
-def plot_image_top_patches(cbcsid, subj_cores, top_patches,
+def plot_image_top_patches(subj_id, subj_cores, top_patches,
                            patch_dataset,
                            patch_scores,
                            n_patches_per_subj=16, inches=5):
 
     # patches for each cores
-    group2patch_idx = {get_cbcsid_group(c)[1]: [] for c in subj_cores}
+    patch_idx = {c: [] for c in subj_cores}
     for r, i in enumerate(top_patches):
         group = get_cbcsid_group(i[0])[1]
         group2patch_idx[group].append(i[1])
@@ -159,11 +155,11 @@ def plot_image_top_patches(cbcsid, subj_cores, top_patches,
 
         plt.subplot(grid[0, i])
         plt.imshow(image)
-        plt.title('{}, group {}'.format(*get_cbcsid_group(core)))
+        plt.title('{}'.format(core))
 
-    #########################################
-    # display patch map for each core cores #
-    #########################################
+    ##################################
+    # display patch map for each core#
+    ##################################
     for i, core in enumerate(subj_cores):
         image = patch_dataset.load_image(core)
         _, group = get_cbcsid_group(core)
@@ -195,7 +191,7 @@ def plot_image_top_patches(cbcsid, subj_cores, top_patches,
         plt.subplot(grid[r_idx, c_idx])
         plt.imshow(patch)
         plot_coord_ticks(top_left=top_left, size=patch_dataset.patch_size)
-        plt.title('({}), {}, group {}, patch {} '.format(rank + 1, cbcsid, group, patch_idx))
+        plt.title('({}), {}, group {}, patch {} '.format(rank + 1, subj_id, group, patch_idx))
 
 
 def overlay_alpha_mask(image, mask, alpha=.2):
