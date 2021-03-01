@@ -110,7 +110,7 @@ def viz_component(image_type, subj_scores,
     # plot patches
     displayed_patch_scores = []
     for extr in extreme_patches.keys():
-        folder_list = ['patches' + image_type, comp_name, extr]
+        folder_list = ['patches_' + image_type, comp_name, extr]
         save_dir = get_and_make_dir(top_dir, signal_kind, *folder_list)
 
         for patch_rank, patch_name in enumerate(extreme_patches[extr]):
@@ -143,35 +143,36 @@ def plot_image_top_patches(subj_id, subj_cores, top_patches,
         group2patch_idx[group].append(i[1])
 
     n_cols = max(4, len(subj_cores))
-    n_rows = 2 + int(np.ceil(len(top_patches) / n_cols))
+#     n_rows = 2 + int(np.ceil(len(top_patches) / n_cols))
+    n_rows = int(np.ceil(len(top_patches) / n_cols))
     plt.figure(figsize=[inches * n_cols, inches * n_rows])
     grid = plt.GridSpec(nrows=n_rows, ncols=n_cols)
 
     ##################
     # plot each core #
     ##################
-    for i, core in enumerate(subj_cores):
-        image = patch_dataset.load_image(core)
+#     for i, core in enumerate(subj_cores):
+#         image = patch_dataset.load_image(core)
 
-        plt.subplot(grid[0, i])
-        plt.imshow(image)
-        plt.title('{}'.format(core))
+#         plt.subplot(grid[0, i])
+#         plt.imshow(image)
+#         plt.title('{}'.format(core))
 
     ##################################
     # display patch map for each core#
     ##################################
-    for i, core in enumerate(subj_cores):
-        image = patch_dataset.load_image(core)
-        _, group = get_cbcsid_group(core)
+#     for i, core in enumerate(subj_cores):
+#         image = patch_dataset.load_image(core)
+#         _, group = get_cbcsid_group(core)
 
-        # get patch map overlayed on image
-        patch_map = get_patch_map(patch_dataset, image_key=core,
-                                  patch_idxs=group2patch_idx[group])
+#         # get patch map overlayed on image
+#         patch_map = get_patch_map(patch_dataset, image_key=core,
+#                                   patch_idxs=group2patch_idx[group])
 
-        masked_image = np.array(overlay_alpha_mask(image, patch_map > 0.0))
+#         masked_image = np.array(overlay_alpha_mask(image, patch_map > 0.0))
 
-        plt.subplot(grid[1, i])
-        plt.imshow(masked_image)
+#         plt.subplot(grid[1, i])
+#         plt.imshow(masked_image)
 
     ####################
     # show top patches #
@@ -179,19 +180,21 @@ def plot_image_top_patches(subj_id, subj_cores, top_patches,
     for rank, patch_name in enumerate(top_patches):
 
         image_key, patch_idx = patch_name
-        cbcsid, group = get_cbcsid_group(image_key)
+#         cbcsid, group = get_cbcsid_group(image_key)
+        subj_id = image_key.split('_' + image_type)[0]
 
         patch = patch_dataset.load_patches(image_key=image_key,
                                            patch_index=patch_idx)
         top_left = patch_dataset.top_lefts_[image_key][patch_idx]
 
-        r_idx = 2 + rank // n_cols
+#         r_idx = 2 + rank // n_cols
+        r_idx = rank // n_cols
         c_idx = rank % n_cols
 
         plt.subplot(grid[r_idx, c_idx])
         plt.imshow(patch)
         plot_coord_ticks(top_left=top_left, size=patch_dataset.patch_size)
-        plt.title('({}), {}, group {}, patch {} '.format(rank + 1, subj_id, group, patch_idx))
+        plt.title('({}), {}, patch {} '.format(rank + 1, subj_id, patch_idx))
 
 
 def overlay_alpha_mask(image, mask, alpha=.2):
