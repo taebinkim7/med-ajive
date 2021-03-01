@@ -3,7 +3,6 @@ from joblib import dump, load, Parallel, delayed
 import os
 from skimage.io import imread
 from tqdm import tqdm
-from glob import glob
 
 from cbcs_joint.Paths import Paths
 from cbcs_joint.cbcs_utils import get_avail_images
@@ -289,7 +288,7 @@ class CBCSPatchGrid(object):
         """
         Loads a core image.
         """
-        fpath = glob(os.path.join(Paths().pro_image_dir, image_key + '*'))[0]
+        fpath = os.path.join(Paths().pro_image_dir, image_key)
         image = imread(fpath)
         return image
 
