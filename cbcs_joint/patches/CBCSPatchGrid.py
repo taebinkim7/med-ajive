@@ -289,7 +289,7 @@ class CBCSPatchGrid(object):
         """
         Loads a core image.
         """
-        fpath = glob(os.path.join(Paths().pro_image_dir, image_key))
+        fpath = glob(os.path.join(Paths().pro_image_dir, image_key)[0])
         image = imread(fpath)
         return image
 
