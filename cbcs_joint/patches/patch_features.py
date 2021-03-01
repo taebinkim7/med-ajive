@@ -86,8 +86,9 @@ def compute_patch_features(image_type,
 
             # write features to disk
             feats.insert(0, patch_idx)
-            feats.insert(0, image_key.split('_' + image_type)[0])
-            # feats.insert(0, '')
+#             feats.insert(0, image_key.split('_' + image_type)[0])
+            feats.insert(0, image_key)
+#             feats.insert(0, '')
             writer.writerow(feats)
 
     fp.close()
