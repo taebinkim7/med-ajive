@@ -40,8 +40,7 @@ def viz_joint_comps(image_type):
     patch_dataset = data['patch_dataset_' + image_type]
     patch_feats = data['patch_feats_' + image_type]
     
-#     for comp in range(ajive.common.rank):
-    for comp in range(3):
+    for comp in range(ajive.common.rank):
         comp_name = image_type + '_joint_comp_{}'.format(comp + 1)    
         subj_scores = ajive.common.scores(norm=True).iloc[:, comp]
         loading_vec = ajive.blocks[image_type].joint.loadings().iloc[:, comp]
