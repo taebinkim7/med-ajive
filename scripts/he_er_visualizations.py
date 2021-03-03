@@ -16,7 +16,6 @@ data = load_he_er_feats()
 #patch_feats = patch_feats.drop(['Unnamed: 0'],axis=1)
 subj_img_feats_he = data['subj_img_feats_he']
 image_feats_processor = data['image_feats_processor']
-subj_cores = subj_img_feats_he.index
 
 # load precomputed AJIVE
 ajive = load(os.path.join(Paths().results_dir, 'data', 'fit_ajive'))
@@ -24,9 +23,9 @@ ajive = load(os.path.join(Paths().results_dir, 'data', 'fit_ajive'))
 # figure config
 mpl_noaxis()
 
-n_extreme_subjs = 5
+n_extreme_cores = 5
 n_extreme_patches = 20
-n_patches_per_subj = 5
+n_patches_per_core = 5
 
 top_dir = Paths().results_dir
 
@@ -42,7 +41,7 @@ def viz_joint_comps(image_type):
 
     for comp in range(ajive.common.rank):
         comp_name = image_type + '_joint_comp_{}'.format(comp + 1)
-        subj_scores = ajive.common.scores(norm=True).iloc[:, comp]
+        core_scores = ajive.common.scores(norm=True).iloc[:, comp]
         loading_vec = ajive.blocks[image_type].joint.loadings().iloc[:, comp]
 
         # transform patch features and project onto loadings vector
@@ -53,17 +52,16 @@ def viz_joint_comps(image_type):
 #         core_scores = retain_pandas(core_centroids,
 #                                     image_feats_processor.transform).dot(loading_vec)
         viz_component(image_type=image_type,
-                      subj_scores=subj_scores,
+                      core_scores=core_scores,
                       patch_scores=patch_scores,
                       patch_dataset=patch_dataset,
                       loading_vec=loading_vec,
                       comp_name=comp_name,
                       top_dir=top_dir,
                       signal_kind='common',
-                      subj_cores=subj_cores,
-                      n_extreme_subjs=n_extreme_subjs,
+                      n_extreme_cores=n_extreme_cores,
                       n_extreme_patches=n_extreme_patches,
-                      n_patches_per_subj=n_patches_per_subj)
+                      n_patches_per_core=n_patches_per_core)
 
 
 ####################
@@ -82,7 +80,7 @@ def viz_indiv_comps(image_type):
         comp_name = image_type + '_indiv_comp_{}'.format(comp + 1)
         print(comp_name)
 
-        subj_scores = ajive.blocks[image_type].\
+        core_scores = ajive.blocks[image_type].\
             individual.scores(norm=True).iloc[:, comp]
         loading_vec = ajive.blocks[image_type].\
             individual.loadings().iloc[:, comp]
@@ -96,17 +94,16 @@ def viz_indiv_comps(image_type):
                                     image_feats_processor.transform).dot(loading_vec)
 
         viz_component(image_type=image_type,
-                      subj_scores=subj_scores,
+                      core_scores=core_scores,
                       patch_scores=patch_scores,
                       patch_dataset=patch_dataset,
                       loading_vec=loading_vec,
                       comp_name=comp_name,
                       top_dir=top_dir,
                       signal_kind=image_type + '_indiv',
-                      subj_cores=subj_cores,
-                      n_extreme_subjs=n_extreme_subjs,
+                      n_extreme_cores=n_extreme_cores,
                       n_extreme_patches=n_extreme_patches,
-                      n_patches_per_subj=n_patches_per_subj)
+                      n_patches_per_core=n_patches_per_core)
 
 
 viz_joint_comps('he')
