@@ -14,7 +14,7 @@ from cbcs_joint.viz_utils import mpl_noaxis
 data = load_he_er_feats()
 
 #patch_feats = patch_feats.drop(['Unnamed: 0'],axis=1)
-subj_img_feats_he = data['subj_img_feats_he']
+# subj_img_feats_he = data['subj_img_feats_he']
 image_feats_processor = data['image_feats_processor']
 
 # load precomputed AJIVE
@@ -25,7 +25,6 @@ mpl_noaxis()
 
 n_extreme_cores = 5
 n_extreme_patches = 20
-n_patches_per_core = 5
 
 top_dir = Paths().results_dir
 
@@ -60,8 +59,7 @@ def viz_joint_comps(image_type):
                       top_dir=top_dir,
                       signal_kind='common',
                       n_extreme_cores=n_extreme_cores,
-                      n_extreme_patches=n_extreme_patches,
-                      n_patches_per_core=n_patches_per_core)
+                      n_extreme_patches=n_extreme_patches)
 
 
 ####################
@@ -102,8 +100,7 @@ def viz_indiv_comps(image_type):
                       top_dir=top_dir,
                       signal_kind=image_type + '_indiv',
                       n_extreme_cores=n_extreme_cores,
-                      n_extreme_patches=n_extreme_patches,
-                      n_patches_per_core=n_patches_per_core)
+                      n_extreme_patches=n_extreme_patches)
 
 
 viz_joint_comps('he')
