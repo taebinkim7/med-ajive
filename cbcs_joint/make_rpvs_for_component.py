@@ -74,9 +74,9 @@ def viz_component(image_type, core_scores,
     ###############
     # sorts patches by scores (ignoring core grouping)
 
-    n_cols = 4
+    n_cols = 5
     # n_rows = 2 + int(np.ceil(len(top_patches) / n_cols))
-    n_rows = int(np.ceil(len(top_patches) / n_cols))
+    n_rows = int(np.ceil(n_extreme_patches / n_cols))
     plt.figure(figsize=[inches * n_cols, inches * n_rows])
     grid = plt.GridSpec(nrows=n_rows, ncols=n_cols)
 
