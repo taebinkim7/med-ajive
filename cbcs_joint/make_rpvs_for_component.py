@@ -12,7 +12,7 @@ from cbcs_joint.jitter import jitter_hist
 
 
 def viz_component(image_type, subj_scores,
-                  patch_scores, patch_dataset, 
+                  patch_scores, patch_dataset,
                   subj_cores, loading_vec, comp_name,
                   top_dir, signal_kind=None,
                   n_extreme_subjs=5, n_extreme_patches=20,
@@ -50,10 +50,10 @@ def viz_component(image_type, subj_scores,
     # most extreme subjects by scores
     extreme_subjs = get_most_extreme(subj_scores, n_extreme_subjs)
     displayed_subj_scores = []
-    
+
     for extr in extreme_subjs.keys():
         for subj_rank, subj_id in enumerate(extreme_subjs[extr]):
-            displayed_subj_scores.append(subj_scores[subj_id])         
+            displayed_subj_scores.append(subj_scores[subj_id])
             move_dir = get_and_make_dir(top_dir, signal_kind, 'cores', comp_name, extr)
             old_fpath = os.path.join(Paths().pro_image_dir, subj_id)
             new_name = '{}_{}'.format(subj_rank, subj_id)
@@ -68,36 +68,37 @@ def viz_component(image_type, subj_scores,
     save_dir = get_and_make_dir(top_dir, signal_kind, 'cores', comp_name)
     savefig(os.path.join(save_dir, 'scores.png'))
 
-    
+
     ########################################################## TODO #############################################################
-    
-    
+
+
     ######################
     # patch for subjects #
     ######################
     # sorts patches by scores (ignoring subjects/core grouping)
 
-#     for extr in extreme_subjs.keys():
-#         folder_list = [signal_kind, 'core_patches_' + image_type, comp_name, extr]
-#         save_dir = get_and_make_dir(top_dir, *folder_list)
+    for extr in extreme_subjs.keys():
+        folder_list = [signal_kind, 'core_patches', comp_name, extr]
+        save_dir = get_and_make_dir(top_dir, *folder_list)
 
-#         for subj_rank, subj_id in enumerate(extreme_subjs[extr]):
+        for subj_rank, subj_id in enumerate(extreme_subjs[extr]):
 
-#             # get top patches for this subject
-#             subj_patch_scores = patch_scores[[i for i in patch_scores.index
-#                                               if subj_id in i[0]]]
-#             top_patch_idxs = list(get_most_extreme(subj_patch_scores,
-#                                                    n=n_patches_per_subj)[extr])
+            # get top patches for this subject
+            subj_patch_scores = patch_scores[[i for i in patch_scores.index
+                                              if subj_id in i[0]]]
+            top_patches = list(get_most_extreme(subj_patch_scores,
+                                                   n=n_patches_per_subj)[extr])
 
-#             plot_image_top_patches(subj_id=subj_id,
-#                                    subj_cores=subj_cores,
-#                                    top_patches=top_patch_idxs,
-#                                    patch_dataset=patch_dataset,
-#                                    patch_scores=patch_scores,
-#                                    n_patches_per_subj=n_patches_per_subj,
-#                                    inches=5)
+            plot_image_top_patches(image_type=image_type,
+                                   subj_id=subj_id,
+                                   subj_cores=subj_cores,
+                                   top_patches=top_patches,
+                                   patch_dataset=patch_dataset,
+                                   patch_scores=patch_scores,
+                                   n_patches_per_subj=n_patches_per_subj,
+                                   inches=5)
 
-#             savefig(os.path.join(save_dir, '{}_{}.png'.format(subj_rank, subj_id)))
+            savefig(os.path.join(save_dir, '{}_{}.png'.format(subj_rank, subj_id)))
 
     ###############
     # patch level #
@@ -110,14 +111,14 @@ def viz_component(image_type, subj_scores,
     # plot patches
     displayed_patch_scores = []
     for extr in extreme_patches.keys():
-        folder_list = ['patches_' + image_type, comp_name, extr]
+        folder_list = ['patches', comp_name, extr]
         save_dir = get_and_make_dir(top_dir, signal_kind, *folder_list)
 
         for patch_rank, patch_name in enumerate(extreme_patches[extr]):
             image_key, patch_idx = patch_name
             displayed_patch_scores.append(patch_scores[patch_name])
             image = patch_dataset.load_patches(image_key, patch_idx)
-            name = '{}_{}_patch_idx{}'.format(image_type, patch_rank, *patch_name)
+            name = '{}_{}_patch_{}'.format(patch_rank, image_key, patch_idx)
 
             # save image
             imsave(os.path.join(save_dir, '{}.png'.format(name)), image)
@@ -131,9 +132,9 @@ def viz_component(image_type, subj_scores,
     savefig(os.path.join(save_dir, 'scores.png'))
 
 
-def plot_image_top_patches(subj_id, subj_cores, top_patches,
-                           patch_dataset,
-                           patch_scores,
+def plot_image_top_patches(image_type, subj_id,
+                           subj_cores, top_patches,
+                           patch_dataset, patch_scores,
                            n_patches_per_subj=16, inches=5):
 
     # patches for each cores
