@@ -110,7 +110,7 @@ def viz_component(image_type, core_scores,
             # plot_coord_ticks(top_left=top_left, size=patch_dataset.patch_size)
             # plt.title('({}), {}, patch {} '.format(patch_rank + 1, image_key,
             #                                        patch_idx))
-            plt.title('{}'.format(patch_rank + 1))
+            # plt.title('{}'.format(patch_rank + 1))
 
         savefig(os.path.join(save_dir, 'top_patches.png'))
 
