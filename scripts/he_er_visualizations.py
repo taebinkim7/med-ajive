@@ -24,9 +24,9 @@ ajive = load(os.path.join(Paths().results_dir, 'data', 'fit_ajive'))
 # figure config
 mpl_noaxis()
 
-n_extreme_subjs = 15
-n_patches_per_subj = 20
-n_extreme_patches = 50
+n_extreme_subjs = 5
+n_extreme_patches = 20
+n_patches_per_subj = 5
 
 top_dir = Paths().results_dir
 
@@ -36,19 +36,19 @@ top_dir = Paths().results_dir
 ####################
 
 def viz_joint_comps(image_type):
-    
+
     patch_dataset = data['patch_dataset_' + image_type]
     patch_feats = data['patch_feats_' + image_type]
-    
+
     for comp in range(ajive.common.rank):
-        comp_name = image_type + '_joint_comp_{}'.format(comp + 1)    
+        comp_name = image_type + '_joint_comp_{}'.format(comp + 1)
         subj_scores = ajive.common.scores(norm=True).iloc[:, comp]
         loading_vec = ajive.blocks[image_type].joint.loadings().iloc[:, comp]
-        
+
         # transform patch features and project onto loadings vector
         patch_scores = retain_pandas(patch_feats,
-                                     image_feats_processor.transform).dot(loading_vec)   
-        
+                                     image_feats_processor.transform).dot(loading_vec)
+
 #         transform core features and project onto loadings vector
 #         core_scores = retain_pandas(core_centroids,
 #                                     image_feats_processor.transform).dot(loading_vec)
@@ -73,11 +73,11 @@ def viz_joint_comps(image_type):
 n_indiv_comps = 5
 
 def viz_indiv_comps(image_type):
-    
+
     patch_dataset = data['patch_dataset_' + image_type]
     patch_feats = data['patch_feats_' + image_type]
 #     core_centroids =
-    
+
     for comp in range(n_indiv_comps):
         comp_name = image_type + '_indiv_comp_{}'.format(comp + 1)
         print(comp_name)
@@ -108,7 +108,7 @@ def viz_indiv_comps(image_type):
                       n_extreme_patches=n_extreme_patches,
                       n_patches_per_subj=n_patches_per_subj)
 
-        
+
 viz_joint_comps('he')
 viz_joint_comps('er')
 
