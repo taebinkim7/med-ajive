@@ -91,32 +91,24 @@ def viz_component(image_type, core_scores,
         for patch_rank, patch_name in enumerate(extreme_patches[extr]):
             image_key, patch_idx = patch_name
             displayed_patch_scores.append(patch_scores[patch_name])
-            image = patch_dataset.load_patches(image_key, patch_idx)
+            patch = patch_dataset.load_patches(image_key, patch_idx)
             name = '{}_{}_patch_{}'.format(patch_rank, image_key, patch_idx)
 
             # save image
-            imsave(os.path.join(save_dir, '{}.png'.format(name)), image)
+            imsave(os.path.join(save_dir, '{}.png'.format(name)), patch)
 
-
-
-        for rank, patch_name in enumerate(top_patches):
-
-            image_key, patch_idx = patch_name
-    #         cbcsid, group = get_cbcsid_group(image_key)
-            core_id = image_key.split('_' + image_type)[0]
-
-            patch = patch_dataset.load_patches(image_key=image_key,
-                                               patch_index=patch_idx)
+            # generate subplot
             top_left = patch_dataset.top_lefts_[image_key][patch_idx]
 
-    #         r_idx = 2 + rank // n_cols
-            r_idx = rank // n_cols
-            c_idx = rank % n_cols
+            r_idx = patch_rank // n_cols
+            c_idx = patch_rank % n_cols
 
             plt.subplot(grid[r_idx, c_idx])
             plt.imshow(patch)
             plot_coord_ticks(top_left=top_left, size=patch_dataset.patch_size)
-            plt.title('({}), {}, patch {} '.format(rank + 1, core_id, patch_idx))
+            plt.title('({}), {}, patch {} '.format(patch_rank + 1, image_key, patch_idx))
+
+        savefig(os.path.join(save_dir, 'top_patches.png')
 
     # plot patch level scores histogram
     jitter_hist(patch_scores.values, hist_kws={'bins': 100})
@@ -193,28 +185,6 @@ def plot_image_top_patches(image_type, core_id, top_patches,
 
 #         plt.subplot(grid[1, i])
 #         plt.imshow(masked_image)
-
-    ####################
-    # show top patches #
-    ####################
-    for rank, patch_name in enumerate(top_patches):
-
-        image_key, patch_idx = patch_name
-#         cbcsid, group = get_cbcsid_group(image_key)
-        core_id = image_key.split('_' + image_type)[0]
-
-        patch = patch_dataset.load_patches(image_key=image_key,
-                                           patch_index=patch_idx)
-        top_left = patch_dataset.top_lefts_[image_key][patch_idx]
-
-#         r_idx = 2 + rank // n_cols
-        r_idx = rank // n_cols
-        c_idx = rank % n_cols
-
-        plt.subplot(grid[r_idx, c_idx])
-        plt.imshow(patch)
-        plot_coord_ticks(top_left=top_left, size=patch_dataset.patch_size)
-        plt.title('({}), {}, patch {} '.format(rank + 1, core_id, patch_idx))
 
 
 def overlay_alpha_mask(image, mask, alpha=.2):
