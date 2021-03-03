@@ -42,7 +42,7 @@ def viz_component(image_type, core_scores,
     ##############
 
     # most extreme cores by scores
-    extreme_cores = get_most_extreme(core_scores, n_extreme_cores)
+    extreme_cores = get_most_extreme(core_scores, 4) # n_extreme_cores
     displayed_core_scores = []
 
     inches = 5
@@ -167,7 +167,7 @@ def viz_component(image_type, core_scores,
     #
     #         plt.subplot(grid[1, i])
     #         plt.imshow(masked_core)
-    # 
+    #
     #         plt.subplot(grid[2, i])
     #         plt.imshow(patch)
     #
