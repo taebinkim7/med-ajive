@@ -37,19 +37,21 @@ def viz_joint_comps(image_type):
 
     patch_dataset = data['patch_dataset_' + image_type]
     patch_feats = data['patch_feats_' + image_type]
+    core_centroids = data['core_centroids_' + image_type]
 
     for comp in range(ajive.common.rank):
         comp_name = image_type + '_joint_comp_{}'.format(comp + 1)
-        core_scores = ajive.common.scores(norm=True).iloc[:, comp]
+        # core_scores = ajive.common.scores(norm=True).iloc[:, comp]
         loading_vec = ajive.blocks[image_type].joint.loadings().iloc[:, comp]
 
         # transform patch features and project onto loadings vector
         patch_scores = retain_pandas(patch_feats,
-                                     image_feats_processor.transform).dot(loading_vec)
+                                     image_feats_processor.transform).\
+                                     dot(loading_vec)
 
-#         transform core features and project onto loadings vector
-#         core_scores = retain_pandas(core_centroids,
-#                                     image_feats_processor.transform).dot(loading_vec)
+        # transform core features and project onto loadings vector
+        core_scores = retain_pandas(core_centroids,
+                                    image_feats_processor.transform).dot(loading_vec)
         viz_component(image_type=image_type,
                       core_scores=core_scores,
                       patch_scores=patch_scores,
@@ -72,24 +74,26 @@ def viz_indiv_comps(image_type):
 
     patch_dataset = data['patch_dataset_' + image_type]
     patch_feats = data['patch_feats_' + image_type]
-#     core_centroids =
+    core_centroids = data['core_centroids_' + image_type]
 
     for comp in range(n_indiv_comps):
         comp_name = image_type + '_indiv_comp_{}'.format(comp + 1)
         print(comp_name)
 
-        core_scores = ajive.blocks[image_type].\
-            individual.scores(norm=True).iloc[:, comp]
+        # core_scores = ajive.blocks[image_type].\
+        #     individual.scores(norm=True).iloc[:, comp]
         loading_vec = ajive.blocks[image_type].\
             individual.loadings().iloc[:, comp]
 
         # transform patch features and project onto loadings vector
-        patch_scores = \
-            retain_pandas(patch_feats, image_feats_processor.transform).dot(loading_vec)
+        patch_scores = retain_pandas(patch_feats,
+                                     image_feats_processor.transform).\
+                                     dot(loading_vec)
 
         # transform core features and project onto loadings vector
         core_scores = retain_pandas(core_centroids,
-                                    image_feats_processor.transform).dot(loading_vec)
+                                    image_feats_processor.transform).\
+                                    dot(loading_vec)
 
         viz_component(image_type=image_type,
                       core_scores=core_scores,

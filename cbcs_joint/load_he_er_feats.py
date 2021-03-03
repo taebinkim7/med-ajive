@@ -3,6 +3,7 @@ import os
 import json
 from sklearn.preprocessing import StandardScaler
 import numpy as np
+from copy import deepcopy
 
 from cbcs_joint.Paths import Paths
 from cbcs_joint.utils import retain_pandas, get_mismatches
@@ -11,7 +12,7 @@ from cbcs_joint.patches.utils import get_subj_background, get_subj_background_in
 
 
 def load_he_er_feats(load_patch_feats=True):
-    
+
     ##############
     # image data #
     ##############
@@ -21,15 +22,19 @@ def load_he_er_feats(load_patch_feats=True):
     patch_dataset_he = CBCSPatchGrid.load(os.path.join(patch_data_dir, 'patch_dataset_he'))
     patch_dataset_er = CBCSPatchGrid.load(os.path.join(patch_data_dir, 'patch_dataset_er'))
 
-    # image patch features
-    subj_img_feats_he = pd.read_csv(os.path.join(patch_data_dir, 'core_centroids_he.csv'),
+    # core centroids
+    core_centroids_he = pd.read_csv(os.path.join(patch_data_dir, 'core_centroids_he.csv'),
                                     index_col=0)
-    subj_img_feats_er = pd.read_csv(os.path.join(patch_data_dir, 'core_centroids_er.csv'),
-                                    index_col=0)    
+    core_centroids_er = pd.read_csv(os.path.join(patch_data_dir, 'core_centroids_er.csv'),
+                                    index_col=0)
+
+    # image features
+    subj_img_feats_he = deepcopy(core_centroids_he)
+    subj_img_feats_er = deepcopy(core_centroids_er)
     subj_img_feats_he.index = subj_img_feats_he.index.astype(str)
     subj_img_feats_er.index = subj_img_feats_er.index.astype(str)
     subj_img_feats_he.index = [idx.split('_he')[0] for idx in subj_img_feats_he.index]
-    subj_img_feats_er.index = [idx.split('_er')[0] for idx in subj_img_feats_er.index]                           
+    subj_img_feats_er.index = [idx.split('_er')[0] for idx in subj_img_feats_er.index]
 
     if load_patch_feats:
         patch_feats_he = \
@@ -37,7 +42,7 @@ def load_he_er_feats(load_patch_feats=True):
                         index_col=['image', 'patch_idx'])
         patch_feats_er = \
             pd.read_csv(os.path.join(patch_data_dir, 'patch_features_er.csv'),
-                        index_col=['image', 'patch_idx'])        
+                        index_col=['image', 'patch_idx'])
     else:
         patch_feats_he, patch_feats_er = None, None
 
@@ -62,16 +67,16 @@ def load_he_er_feats(load_patch_feats=True):
     subj_img_feats_he = retain_pandas(subj_img_feats_he, image_feats_processor.fit_transform)
     subj_img_feats_er = retain_pandas(subj_img_feats_er, image_feats_processor.fit_transform)
 
-#     ##################################
-#     # add hand crafted image features#
-#     ##################################
-#     # add proprotion background
-#     clinical_data.loc[:, 'background'] = \
-#         get_subj_background(patch_dataset, avail_cbcsids=intersection)
-
-#     clinical_data.loc[:, 'background_intensity'] = \
-#         get_subj_background_intensity(patch_dataset,
-#                                       avail_cbcsids=intersection)
+    # ##################################
+    # # add hand crafted image features#
+    # ##################################
+    # # add proprotion background
+    # clinical_data.loc[:, 'background'] = \
+    #     get_subj_background(patch_dataset, avail_cbcsids=intersection)
+    #
+    # clinical_data.loc[:, 'background_intensity'] = \
+    #     get_subj_background_intensity(patch_dataset,
+    #                                   avail_cbcsids=intersection)
 
     # make sure subjects are in same order
     idx = subj_img_feats_he.index.sort_values()
@@ -82,6 +87,8 @@ def load_he_er_feats(load_patch_feats=True):
             'patch_dataset_er': patch_dataset_er,
             'patch_feats_he': patch_feats_he,
             'patch_feats_er': patch_feats_er,
+            'core_centroids_he': core_centroids_he,
+            'core_centroids_er': core_centroids_er,
             'subj_img_feats_he': subj_img_feats_he,
             'subj_img_feats_er': subj_img_feats_er,
             'image_feats_processor': image_feats_processor}
