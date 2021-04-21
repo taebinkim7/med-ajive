@@ -19,9 +19,6 @@ Using python 3.7.2., (e.g. `conda create -n med-ajive python=3.7.2`, `conda acti
 bash setup.sh
 ```
 
-Note that it is important to install torch 1.0.0 with CUDA 10.0.
-
-
 ### 3. Image patch feature extraction
 
 ```
