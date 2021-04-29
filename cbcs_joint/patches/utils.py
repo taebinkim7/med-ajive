@@ -412,7 +412,7 @@ def pad_image(image, new_size, pad_val):
     new_size: int, tuple, (new_heght, new_width)
         Image will be padded to (new_height, new_width, n_channels)
 
-    pad_vad: float, listlike value to pad with
+    pad_val: float, listlike value to pad with
 
     """
     if isinstance(new_size, numbers.Number):
