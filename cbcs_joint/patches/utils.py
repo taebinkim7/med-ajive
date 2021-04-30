@@ -423,7 +423,7 @@ def pad_image(image, new_size, pad_val):
         return image
 
     if image.shape[1] > new_size[1]:
-        print('WARNING: image width larger than desiered cnn image size')
+        print('WARNING: image width larger than desired cnn image size')
         return image
 
     # width padding
