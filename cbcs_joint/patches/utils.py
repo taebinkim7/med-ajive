@@ -409,7 +409,7 @@ def pad_image(image, new_size, pad_val):
     image (ndarray): (height, width, n_channels)
         Image to pad.
 
-    new_size: int, tuple, (new_heght, new_width)
+    new_size: int, tuple, (new_height, new_width)
         Image will be padded to (new_height, new_width, n_channels)
 
     pad_val: float, listlike value to pad with
