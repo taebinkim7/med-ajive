@@ -16,7 +16,7 @@ def compute_patch_features(image_type,
                            limit=None):
 
     """
-    Computes the features for each image patches.
+    Computes the features for each image patch.
 
     Parameters
     ----------
