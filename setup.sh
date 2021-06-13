@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pip install .
+pip install -e .
 pip install scikit-image==0.14.1
 git clone https://github.com/idc9/explore.git
 python explore/setup.py install
